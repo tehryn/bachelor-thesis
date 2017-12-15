@@ -1,0 +1,152 @@
+\documentclass{beamer}
+\usepackage{times}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+% \usetheme{Berkeley}
+% \usetheme{Copenhagen}
+\usetheme{Madrid}
+% \usecolortheme{beaver}
+\newcommand{\czuv}[1]{\quotedblbase #1\textquotedblleft}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\setbeamertemplate{caption}[numbered]
+
+\title{Rozšíření systému pro získávání, zpracování a analýzu rozsáhlých kolekcí textů z webu}
+\subtitle{Prezentace k předmětu Semestální projekt}
+\author{Matějka Jiří}
+\date{\today}
+\logo{\includegraphics[width=3cm]{logo.png}}
+
+\begin{document}
+  \frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Obsah}
+
+    \begin{itemize}
+      \item Linux Mint
+      \item Linux Mint - osobní zkušenost
+      \item Linux Mint Debian Edition
+      \item Linux Mint Debian Edition - osobní zkušenost
+      \item Ubuntu
+      \item Ubuntu - osobní zkušenost
+      \item Debian
+      \item Debian - osobní zkušenost
+    \end{itemize}
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Ubuntu}
+    \hspace{2mm}
+    \includegraphics[height=1.5cm]{ubuntu.png}
+    \footnotetext[1]{Zdroj: Ubuntu logo [online] [vid. 2016-04-06], \\ \hspace{5.5mm}dostupné z: http://design.ubuntu.com/brand/ubuntu-logo \vspace{1.5mm}}
+	\begin{itemize}
+		\item Nejnovější verze: 16.04 LTS
+		\item GUI: Unity, GNOME, KDE, XFCE, LXDE, ...
+		\item Kernel: 4.4
+		\item Výhody: Početná komunita, snadná instalace, podpora hardware, LTS (Long Term Support) verze, nejnovější LTS verze jádra
+		\item Nevýhody: Angažování firmy do vývoje OS, možná instalace nestabilních balíků
+	\end{itemize}
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Ubuntu - Vlastní zkušenost}
+      \begin{itemize}
+	\item Verze: 15.10
+	\item GUI: GNOME
+	\item Kernel: 4.2
+      \end{itemize}
+      Pro Ubuntu jsem se rozhodl poté, co jsem se pokusil ručně aktualizovat
+      jádro systému Linux Mint Debian Edition. Distribuce mi vůbec nevyhovovala,
+      co chvíli se objevilo vyskakovací okno s hlášením nějaké chyby. Žádný operační systém
+      nebyl odstraněn z mého zařízení tak rychle, jako tato verze Ubuntu.
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Linux Mint}
+    \includegraphics[height=1.5cm]{mint.png}
+    \footnotetext[1]{Zdroj: Linux Mint Official Logo.svg [online] [vid. 2016-04-06], \\ \hspace{5.5mm}dostupné z: https://commons.wikimedia.org/wiki/File:Linux\_Mint\_Official\_Logo.svg \vspace{1.5mm}}
+      \begin{itemize}
+	\item Nejnovější verze: 17.3 \czuv{Rosa}
+	\item GUI: KDE, Cinnamon, Mate a XFCE
+	\item Kernel: 3.16
+	\item Výhody: Početná komunita, snadná instalace, podpora hardware, malé HW požadavky
+	\item Nevýhody: Možná instalace nestabilních balíků, starší verze jádra
+      \end{itemize}
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Linux Mint - Vlastní zkušenost}
+      \begin{itemize}
+	\item Verze: 15, 16, 17, 17.1 a 17.2
+	\item GUI: Cinnamon, MATE a KDE
+	\item Kernel: 3.16
+      \end{itemize}
+      Linux Mint byla první distribuce Linuxu, kterou jsem vyzkoušel. Zpočátku jsem ji moc nepoužíval,
+      ale poté, co úplně selhal Windows~Vista a následně i~Windows~7, jsem přešel k
+      Linuxu. Linux Mint je jedna z nejvhodnějších distribucí pro začátečníky a
+      je do jisté míry i podobná Windows. S~distribucí jsem byl naprosto spokojený,
+      byť grafické prostředí KDE způsobovalo mému zastaralému stroji značné problémy.
+      Po přechodu na Cinnamon veškeré problémy ustaly.
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Linux Mint Debian Edition}
+    \includegraphics[height=1.5cm]{mint.png}
+    \footnotetext[1]{Zdroj: Linux Mint Official Logo.svg [online] [vid. 2016-04-06], \\ \hspace{5.5mm}dostupné z: https://commons.wikimedia.org/wiki/File:Linux\_Mint\_Official\_Logo.svg \vspace{1.5mm}}
+      \begin{itemize}
+	\item Nejnovější verze: 2.0 \czuv{Betsy}
+	\item GUI: Cinnamon a Mate
+	\item Kernel: 3.16
+	\item Výhody: Početná komunita, snadná instalace, podpora hardware, malé HW požadavky, stabilita, stabilní instalační balíky
+	\item Nevýhody: Starší verze jádra, pomalejší vývoj OS
+      \end{itemize}
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Linux Mint Debian Edition - Vlastní zkušenost}
+      \begin{itemize}
+	\item Verze: 2.0 \czuv{Betsy}
+	\item GUI: Cinnamon
+	\item Kernel: 3.16
+      \end{itemize}
+      Tato distribuce se mi zatím nejvíce osvědčila. Ze všech distribucí, co jsem zkoušel,
+      je nejstabilnější, ale má i své \czuv{mouchy}. Jádro 3.16 patří mezi starší verze
+      a právě kvůli chybě v jeho kódu na mém laptopu nefunguje optimálně větráček. Upgrade na vyšší verzi
+      jádra se mi nepovedl a~musel jsem přeinstalovávat celý operační systém, nicméně LMDE
+      mi nejvíce \czuv{sedla} a momentálně tuto distribuci používám.
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Debian}
+    \includegraphics[height=1.5cm]{Debian.jpg}
+        \footnotetext[1]{Zdroj: Debian 7.1 [online] [vid. 2016-04-06], \\ \hspace{5.5mm}dostupné z: http://www.linux.org/resources/debian.11/ \vspace{1.5mm}}
+      \begin{itemize}
+	\item Nejnovější verze: 8.4 \czuv{Jessie}
+	\item GUI: Cinnamon, KDE, LXDE, XFCE, ...
+	\item Kernel: 3.16
+	\item Výhody: Početná komunita, podpora hardware, malé HW požadavky, stabilita, stabilní instalační balíky
+	\item Nevýhody: Starší verze jádra, pomalejší vývoj OS, je určený pro pokročilejší uživatele
+      \end{itemize}
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Debian - Vlastní zkušenost}
+      \begin{itemize}
+	\item Verze: 8.4 \czuv{Jessie}
+	\item GUI: GNOME
+	\item Kernel: 3.16
+      \end{itemize}
+      Pro Debian jsem se rozhodl po dobré zkušenosti s Linux Mint Debian Edition a nezklamal.
+      Operační systém byl stabilní a oproti LMDE s~grafickým prostředím Cinnamon i o něco rychlejší,
+      ale kvůli stejné verzi jádra, jako u LMDE a také kvůli tomu, že mě Minty \czuv{rozmazlily}
+      jednoduchostí a lehkou ovladatelností, jsem se opět vrátil k LMDE.
+  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \frametitle{Závěr}
+    \begin{center}
+      Děkuji za pozornost
+    \end{center}
+  \end{frame}
+\end{document}
