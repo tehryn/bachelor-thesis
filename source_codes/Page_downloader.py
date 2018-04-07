@@ -40,7 +40,7 @@ class Page_downloader( object ):
             if ( data.returncode != 0 ): # Odpoved je 200 OK
                 info_message = '\nOdpoved:' + http_header + '\n' if type( http_header ) is str else ''
                 info = Functions.get_exception_info( 'Nelze stahnout stranku "' + url + '"' + info_message )
-                return { 'error':True, 'value':info, 'response':http_header }
+                return { 'error':True, 'value':info, 'url':url, 'response':http_header }
         try:
             page = Functions.decode_data( page, 'utf-8' ) # teoreticky muze vyhodit vyjimku
         except:
@@ -48,8 +48,8 @@ class Page_downloader( object ):
                 page = page.decode( 'utf-8', errors='ignore' ) # muze vyhodit vyjimku
             except:
                 info = Functions.get_exception_info( 'Nelze dekodovat stazenou stranku "' + url +'"' )
-                return { 'error':True, 'value':info, 'response':http_header }
-        return { 'error':False, 'value':page, 'response':http_header }
+                return { 'error':True, 'value':info, 'url':url, 'response':http_header }
+        return { 'error':False, 'value':page, 'url':url, 'response':http_header }
 
     def get_multiple_pages_from_urls( self, urls ):
         pages = list()

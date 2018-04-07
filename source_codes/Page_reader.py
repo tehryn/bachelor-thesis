@@ -3,7 +3,7 @@ import lzma
 import gzip
 import uuid
 import warc
-from Page import Page
+from new_Page import Page
 
 class Page_reader( object ):
     def __init__( self, filename=None ):
@@ -18,9 +18,13 @@ class Page_reader( object ):
         self._warc = warc.WARCFile( fileobj = self._file )
 
     def __iter__( self ):
+        first = True
         for record in self._warc:
+            if ( first ):
+                first = False
+                continue
             content  = record.payload.read()
-            response = ''
+            response = bytes()
             index    = content.find( b'\r\n\r\n' )
             if ( index > 0 ):
                 response = content[ :index ]
@@ -33,7 +37,7 @@ class Page_reader( object ):
                 warc_id = record[ 'WARC-Record-ID' ][ 10:-1 ]
             else:
                 warc_id = str( uuid.uuid1() )
-            yield Page( page = content, url = uri, http_response = response, page_id = warc_id )
+            yield Page( page = content, url = uri, http_response = response.decode(), page_id = warc_id )
 
 if __name__ == '__main__':
     test_file = None

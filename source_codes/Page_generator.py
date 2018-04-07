@@ -6,10 +6,11 @@ class Page_generator( Page_downloader ):
     _pause         = 0
     _links         = dict()
 
-    def __init__( self, iterable, pause=None, wait=1, tries=1 ):
+    def __init__( self, iterable, pause=None, wait=1, tries=1, threads=0 ):
         super().__init__( wait, tries )
         if ( pause ):
             self._pause = pause
+        self._threads = threads
 
         for item in iterable:
             index = -1
@@ -18,38 +19,77 @@ class Page_generator( Page_downloader ):
             else:
                 index = Functions.find_nth( item, '.', 2 )
             key = item[ :index ] if ( index >= 0 ) else item
-            if not ( key in self._links ):
+            if ( key not in self._links ):
                 self._links[ key ] = list()
             self._links[ key ].append( item )
 
     def _get_one_page( self, key ):
-            link = self._links[ key ].pop()
+        link = self._links[ key ].pop()
+        if ( len( self._links[ key ] ) == 0 ):
+            del self._links[ key ]
+        page = super().get_page_from_url( link )
+        if ( page[ 'error' ] ):
+            super()._set_error( page[ 'value' ], link )
+            return None
+        else:
+            return { 'content': page[ 'value' ], 'url' : link, 'response' : page[ 'response' ] }
+
+    def _get_more_pages( self, keys ):
+        links = list()
+        for key in keys:
+            links.append( self._links[ key ].pop() )
             if ( len( self._links[ key ] ) == 0 ):
                 del self._links[ key ]
-            page = super().get_page_from_url( link )
+        pages = super().get_multiple_pages_from_urls( links )
+        return_list = list()
+        for page in pages:
             if ( page[ 'error' ] ):
-                super()._set_error( page[ 'value' ], link )
-                return None
+                super()._set_error( page[ 'value' ], page[ 'url' ] )
+                return_list.append( None )
             else:
-                return { 'content': page[ 'value' ], 'url' : link, 'response' : page[ 'response' ] }
+                return_list.append( { 'content': page[ 'value' ], 'url' : page[ 'url' ], 'response' : page[ 'response' ] } )
+        return return_list
 
     def __iter__( self ):
-        cont = True
         first_download = 0
         last_download  = 0
-        while ( len(self. _links ) > 0 ):
-            first_download = time.time()
-            cont = False
-            for key in list( self._links ):
-                cont = True
-                page = self._get_one_page( key )
-                if ( page ):
-                    yield page
-                last_download = time.time()
+        if ( self._threads == 0 ):
+            while ( len(self. _links ) > 0 ):
+                first_download = time.time()
+                for key in list( self._links ):
+                    page = self._get_one_page( key )
+                    if ( page ):
+                        yield page
+                    last_download = time.time()
 
-            nap_time = last_download - first_download
-            if ( nap_time < self._pause ):
-                time.sleep( self._pause - nap_time )
+                nap_time = last_download - first_download
+                if ( nap_time < self._pause ):
+                    time.sleep( self._pause - nap_time )
+        else:
+            while ( len(self. _links ) > 0 ):
+                first_download = time.time()
+                keys = list()
+                for key in list( self._links ):
+                    if len( keys ) <= self._threads:
+                        keys.append( key )
+                        continue
+                    else:
+                        pages = self._get_more_pages( keys )
+                        keys  = list()
+                        last_download = time.time()
+                        for page in pages:
+                            if ( page ):
+                                yield page
+                if ( len( keys ) > 0 ):
+                    pages = self._get_more_pages( keys )
+                    keys  = list()
+                    last_download = time.time()
+                    for page in pages:
+                        if ( page ):
+                            yield page
+                nap_time = last_download - first_download
+                if ( nap_time < self._pause ):
+                    time.sleep( self._pause - nap_time )
 
 if __name__ == '__main__':
     urls = {

@@ -75,7 +75,16 @@ possible_arguments = [
         'prerequisite' : None,
         'description'  : 'Pokud je nastaven, tak namisto stderr jsou chyby vypisovany do souboru urcenho ' +
                          'timto parametrem.'
-    }
+    },
+    {
+        'names'        : [ '--multithreading',   '-m' ],
+        'optional'     : True,
+        'has_tail'     : 1,
+        'word_index'   : 'threads',
+        'prerequisite' : None,
+        'description'  : 'Urcuje kolik vlaken se spusti pro stahovani stranek, doporucuji pouzit' +
+                         'pri velkem mnozstvi stranek. Vychozi hodnota je 0.'
+    },
 ]
 
 settings = dict()
@@ -90,11 +99,11 @@ except:
 
 wait = 1
 if ( 'wait' in settings ):
-    wait = settings[ 'wait' ]
+    wait = settings[ 'wait' ][0]
 
 pause = 1
 if ( 'pause' in settings ):
-    pause = settings[ 'pause' ]
+    pause = settings[ 'pause' ][0]
 
 err = sys.stderr
 if ( 'error' in settings ):
@@ -103,6 +112,10 @@ if ( 'error' in settings ):
 stored = sys.stdout
 if ( 'stored' in settings ):
     stored = open( settings[ 'stored' ][0], 'a' )
+
+threads = 0
+if ( 'threads' in settings ):
+    threads = int( settings[ 'threads' ][0] )
 
 download_links = set()
 if ( 'input' not in settings ):
@@ -121,7 +134,7 @@ for file_name in settings[ 'input' ]:
     input_file.close()
 
 out       = lzma.open( settings[ 'output' ][0], 'wb' )
-generator = Page_generator( pause=pause, wait=wait, iterable=download_links )
+generator = Page_generator( pause=pause, wait=wait, iterable=download_links, threads=threads )
 hostname  = subprocess.check_output( "hostname -f", shell=True).decode( 'utf-8' )
 user      = subprocess.check_output( "echo $USER", shell=True).decode( 'utf-8' )
 
@@ -141,3 +154,5 @@ for page in generator:
     warc_record = warc.WARCRecord( warc_header, ( response + page[ 'content' ] ).encode( 'utf-8', 'replace' ) )
     warc_record.write_to( out )
     stored.write( page[ 'url' ] + '\n' )
+
+sys.stderr.write( generator.get_errors_info() )

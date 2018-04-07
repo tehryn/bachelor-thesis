@@ -208,7 +208,7 @@ class Downloader_thread ( threading.Thread ):
 
         log_file = path + '/logs/' + self.key + '/' + download_filename + '.page_downloader'
         if ( input_files ):
-            downloader  = [ path + '/page_downloader.py', '-o', output_file, '-e', log_file, '-w', '5', '-i' ] + input_files
+            downloader  = [ path + '/page_downloader.py', '-o', output_file, '-e', log_file, '-w', '5', '-i' ] + list( input_files )
             process     = subprocess.Popen( downloader, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
             stdout, stderr = process.communicate()
 

@@ -7,7 +7,7 @@ from Link_collector import Link_collector
 
 
 class Page( object ):
-    tag_begin = 'TagStartsWithAsQpeQeporSxfsSwerfSffeWSfWrSFSXwwrqwsSDrwqwesaSewwasdropiUbHDBAJin'
+    tag_begin = 'TagStartsWithqusdfgRnxALvnFbghE'
     def __init__( self, page, url, http_response, page_id ):
         self._soup        = BeautifulSoup( page, 'html.parser' )
         self._collector   = Link_collector()
@@ -31,7 +31,7 @@ class Page( object ):
     @staticmethod
     def decode_tag( tag ):
         tag = tag[ len( Page.tag_begin ): ]
-        tag = tag.replace( 'lEfTkpoecwucnsgqteuroasjdaswqeasdxzasf', '<' )
+        tag = tag.replace( 'lEfTkpOecwucnsgQteuRoasjdasWqeasdXzaSf', '<' )
         tag = tag.replace( 'rIghtUqPqakasDfitpQidugHbczMxJsuwqowsG', '>' )
         tag = tag.replace( 'sLasHiqoWpasDguErtPqxZmaSkfgReqpEroSdA', '/'  )
         return tag

@@ -118,7 +118,8 @@ if ( 'wait' in settings ):
 threads = 0
 if ( 'threads' in settings ):
     threads = int( settings[ 'threads' ][0] )
-if ( not ( 'input' in settings ) ):
+
+if ( 'input' not in settings ):
     settings[ 'input' ] = [ sys.stdin ]
 
 if ( 'append' in settings ):
