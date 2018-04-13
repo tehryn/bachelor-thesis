@@ -2,98 +2,218 @@
 % (c) Michal Bidlo, Bohuslav Křena, 2008
 
 \chapter{Úvod}
-Abychom mohli napsat odborný text jasně a~srozumitelně, musíme splnit několik základních předpokladů:
-\begin{itemize}
-\item Musíme mít co říci,
-\item musíme vědět, komu to chceme říci,
-\item musíme si dokonale promyslet obsah,
-\item musíme psát strukturovaně. 
-\end{itemize}
+Na úvod mé práce uvedu několik důvodů, proč se zajímám o problematiku zpracování
+rozsáhlých kolekcí textů z webu a také uvedu čtenáře do problematiky.
+\section{Volba tématu}
+Téma Rozšíření systému pro získávání, zpracování a analýzu rozsáhlých kolekcí textů z webu
+jsem si zvolil hlavně kvůli své dvouleté spolupráci s výzkumnou skupinou KNOT \cite{KNOT}, svému zájmu a
+svým zkušenostem v této problematice.
+\section{Úvod do problematiky}
+Cílem tohoto projektu není vytvořit nový proces zpracování webových korpusů, ale rozšířit stávající
+systém. Aktuálně dokážeme jednorázově vytvořit korpus a sémanticky ho označit. Problém tedy není v tom,
+že korpus nelze vytvořit, ale že to nelze provádět automaticky. To znamená, že do procesu musí vstoupit
+člověk, který je obeznámen s nástroji i problematikou, spustit mnoho nástrojů ve správném pořadí a
+sledovat, zda při zpracování nenastane chyba.
 
-Tyto a další pokyny jsou dostupné též na školních internetových stránkách \cite{fitWeb}.
+Dalšími problémemy jsou rozmanitost webových stránek, jak z hlediska vzhledu, jejich účelu, tak i
+způsobu, jak je zdrojový kód stránky napsán. Dalším faktorem ovlivňující obtížnost je tolerance jazyka HTML k chýbám
+Vícejazyčnost stránek nutí použití dalších nástrojů pro detekci jazyka, které zpomalují celkové zpracování
+a tyto nástroje jsou často mateny ne tolik gramatickými chybami, jako spíše příliš krátkými textovými úseky,
+jakým může být například komentář uživatele k jednomu ze článků na webové stránce.
 
-Přehled základů typografie a tvorby dokumentů s využitím systému \LaTeX je 
-uveden v~\cite{Rybicka}.
-
-\section{Musíme mít co říci}
-Dalším důležitým předpokladem dobrého psaní je {\it psát pro někoho}. Píšeme-li si poznámky sami pro sebe, píšeme je jinak než výzkumnou zprávu, článek, diplomovou práci, knihu nebo dopis. Podle předpokládaného čtenáře se rozhodneme pro způsob psaní, rozsah informace a~míru detailů.
-
-\section{Musíme vědět, komu to chceme říci}
-Dalším důležitým předpokladem dobrého psaní je psát pro někoho. Píšeme-li si poznámky sami pro sebe, píšeme je jinak než výzkumnou zprávu, článek, diplomovou práci, knihu nebo dopis. Podle předpokládaného čtenáře se rozhodneme pro způsob psaní, rozsah informace a~míru detailů.
-
-\section{Musíme si dokonale promyslet obsah}
-Musíme si dokonale promyslet a~sestavit obsah sdělení a~vytvořit pořadí, v~jakém chceme čtenáři své myšlenky prezentovat. 
-Jakmile víme, co chceme říci a~komu, musíme si rozvrhnout látku. Ideální je takové rozvržení, které tvoří logicky přesný a~psychologicky stravitelný celek, ve kterém je pro všechno místo a~jehož jednotlivé části do sebe přesně zapadají. Jsou jasné všechny souvislosti a~je zřejmé, co kam patří.
-
-Abychom tohoto cíle dosáhli, musíme pečlivě organizovat látku. Rozhodneme, co budou hlavní kapitoly, co podkapitoly a~jaké jsou mezi nimi vztahy. Diagramem takové organizace je graf, který je velmi podobný stromu, ale ne řetězci. Při organizaci látky je stejně důležitá otázka, co do osnovy zahrnout, jako otázka, co z~ní vypustit. Příliš mnoho podrobností může čtenáře právě tak odradit jako žádné detaily.
-
-Výsledkem této etapy je osnova textu, kterou tvoří sled hlavních myšlenek a~mezi ně zařazené detaily.
-
-\section{Musíme psát strukturovaně} 
-Musíme začít psát strukturovaně a~současně pracujeme na co nejsrozumitelnější formě, včetně dobrého slohu a~dokonalého značení. 
-Máme-li tedy myšlenku, představu o~budoucím čtenáři, cíl a~osnovu textu, můžeme začít psát. Při psaní prvního konceptu se snažíme zaznamenat všechny své myšlenky a~názory vztahující se k~jednotlivým kapitolám a~podkapitolám. Každou myšlenku musíme vysvětlit, popsat a~prokázat. Hlavní myšlenku má vždy vyjadřovat hlavní věta a~nikoliv věta vedlejší.
-
-I k~procesu psaní textu přistupujeme strukturovaně. Současně s~tím, jak si ujasňujeme strukturu písemné práce, vytváříme kostru textu, kterou postupně doplňujeme. Využíváme ty prostředky DTP programu, které podporují strukturovanou stavbu textu (předdefinované typy pro nadpisy a~bloky textu). 
+Webových zdrojů je obrovské množství a je nemožné, nebo přinejmenším velice obtížné, napsat optimální program
+pro všechny webové stránky. Má práce se zaměřuje zejména na zpracování článků v českých mediích. Velké množství těchto zdrojů
+je logicky členěno do bloků, ale je zde i mnoho reklam. HTML kód je často bez chyb a lze ho poměrně jednoduše
+zpracovat, ale jsou zde i skutečnosti, na které je potřeba si dát pozor.
 
 
-\chapter{Několik formálních pravidel}
-Naším cílem je vytvořit jasný a~srozumitelný text. Vyjadřujeme se proto přesně, píšeme dobrou češtinou (nebo zpravidla angličtinou) a~dobrým slohem podle obecně přijatých zvyklostí. Text má upravit čtenáři cestu k~rychlému pochopení problému, předvídat jeho obtíže a~předcházet jim. Dobrý sloh předpokládá bezvadnou gramatiku, správnou interpunkci a~vhodnou volbu slov. Snažíme se, aby náš text nepůsobil příliš jednotvárně používáním malého výběru slov a~tím, že některá zvlášť oblíbená slova používáme příliš často. Pokud používáme cizích slov, je samozřejmým předpokladem, že známe jejich přesný význam. Ale i~českých slov musíme používat ve správném smyslu. Např. platí jistá pravidla při používání slova {\it zřejmě}. Je {\it zřejmé} opravdu zřejmé? A~přesvědčili jsme se, zda to, co je {\it zřejmé} opravdu platí? Pozor bychom si měli dát i~na příliš časté používání zvratného se. Například obratu {\it dokázalo se}, že\ldots{} zásadně nepoužíváme. Není špatné používat autorského {\it my}, tím předpokládáme, že něco řešíme, nebo například zobecňujeme spolu se čtenářem. V~kvalifikačních pracích použijeme autorského {\it já} (například když vymezujeme podíl vlastní práce vůči převzatému textu), ale v~běžném textu se nadměrné používání první osoby jednotného čísla nedoporučuje.
+\chapter{Kolekce odkazů a stahování webových stránek} % idealne 5 stran
+Aby bylo možné zpracovat webové články, je nutné mít k dispozici alespoň minimum dat. Způsobů, pomocí kterých lze získávat pravidelně nové webové
+články, je více. Oblíbeným je například klasický webcrawling, kde se ze stažené stránky extrahují odkazy a
+získané adresy se použijí k dalšímu sběru dat. Má práce se zaměřuje hlavně na využití technologií RSS a ATOM.
 
-Za pečlivý výběr stojí i~symbolika, kterou používáme ke {\it značení}. Máme tím na mysli volbu zkratek a~symbolů používaných například pro vyjádření typů součástek, pro označení hlavních činností programu, pro pojmenování ovládacích kláves na klávesnici, pro pojmenování proměnných v~matematických formulích a~podobně. Výstižné a~důsledné značení může čtenáři při četbě textu velmi pomoci. Je vhodné uvést seznam značení na začátku textu. Nejen ve značení, ale i~v~odkazech a~v~celkové tiskové úpravě je důležitá důslednost.
+RSS \textit{Rich Site Summary} je technologie sloužící k syndikaci obsahu. Využívá XML formátu a uživatelé
+webových stránek si mohou díky této technologii nastavit odběr novinek z webu \cite{RSS}. Zejména díky tomu, že technologie RSS neměla ve
+své době téměř žádnou konkurenci, rychle se rozšířila a ještě dnes je nejpoužívanějším nástrojem, přestože je vývoj od roku 2003
+zastaven \cite{ATOM_VS_RSS}.
 
-S tím souvisí i~pojem z~typografie nazývaný {\it vyznačování}. Zde máme na mysli způsob sazby textu pro jeho zvýraznění. Pro zvolené značení by měl být zvolen i~způsob vyznačování v~textu. Tak například klávesy mohou být umístěny do obdélníčku, identifikátory ze~zdrojového textu mohou být vypisovány {\tt písmem typu psací stroj} a~podobně.
+ATOM \textit{Atom Syndication Format} je jedním z webových standardů. Podobně, jako RSS, se využívá XML formátu a slouží k
+informování uživatelů stránek o nových článcích \cite{ATOM} Na rozdíl od RSS se jedná o mladší formát a už od začátku se dbalo na
+modularitu, znovupoužitelnost a přehlednost kódu. Zatímco RSS není IETF standardem, ATOM sem byl zařazen v prosinci roku 2005 \cite{ATOM_VS_RSS}.
 
-Uvádíme-li některá fakta, neskrýváme jejich původ a~náš vztah k~nim. Když něco tvrdíme, vždycky výslovně uvedeme, co z~toho bylo dokázáno, co teprve bude dokázáno v~našem textu a~co přebíráme z~literatury s~uvedením odkazu na příslušný zdroj. V~tomto směru nenecháváme čtenáře nikdy na pochybách, zda jde o~myšlenku naši nebo převzatou z~literatury.
+\section{Zpracování RSS a ATOM souborů}
+Jak RSS, tak i ATOM jsou psané pomocí jazyka XML. Proto jsem použil modul \textit{xml.etree.ElementTree} určený k práci nad jednotlivými
+elementy. Ovšem ne všechny zpracovávané dokumenty jsou bez chyb a právě na tyto dokumenty je výše zmíněný modul krátký. U poškozených
+dokumentů zpracování probíhá pomocí regulárních výrazů a díky tomu jsem schopen získat alespoň pár odkazů na nové články.
 
-Nikdy neplýtváme čtenářovým časem výkladem triviálních a~nepodstatných informací. Neuvádíme rovněž několikrát totéž jen jinými slovy. Při pozdějších úpravách textu se nám může některá dříve napsaná pasáž jevit jako zbytečně podrobná nebo dokonce zcela zbytečná. Vypuštění takové pasáže nebo alespoň její zestručnění přispěje k~lepší čitelnosti práce! Tento krok ale vyžaduje odvahu zahodit čas, který jsme jejímu vytvoření věnovali. 
+\section{Použité nástroje}
+Kolekce odkazů a stahování stránek bylo naprogramováno v jazyce Python. Konkrétní verze jazyka je Python3.5, která je nainstalovaná na serverech,
+na nichž budou nástroje spuštěny. Jazyk Python jsem zvolil nejen kvůli popularitě a velkému množství knihoven, ale i kvůli nenáročnosti
+procesu kolekce a stahování stránek na procesor.
 
+\label{urllib}
+\subsection{Urllib}
+Urllib je balíček několika modulů určených pro práci s url. Ve své práci jsem využil pouze modulu \textit{urllib.request},
+který je určený ke stahování webových zdrojů pomocí url odkazu \cite{URLLIB}. Pomocí tohoto modulu se mi podařilo stáhnout většinu
+odkazů, ale stále zde bylo několik stránek, které se podařilo stáhnout až na pozdější pokus a také zde byly stránky, které
+se stáhnout nepodařilo, přestože přes prohlížeč na ně přistoupit bylo možné. Tento problém vyřešil nástroj \textit{GNU Wget}.
 
-\chapter{Nikdy to nebude naprosto dokonalé}
-Když jsme už napsali vše, o~čem jsme přemýšleli, uděláme si den nebo dva dny volna a~pak si přečteme sami rukopis znovu. Uděláme ještě poslední úpravy a~skončíme. Jsme si vědomi toho, že vždy zůstane něco nedokončeno, vždy existuje lepší způsob, jak něco vysvětlit, ale každá etapa úprav musí být konečná.
+\label{wget}
+\subsection{GNU Wget}
+\textit{GNU Wget} je aplikace pro stahování souborů pomocí protokolů HTTP, HTTPS, FTP a FTPS. Je to neinteraktivní nástroj spouštěný uvnitř
+příkazové řádky a je vhodný pro použití v automatických skriptech \cite{WGET}. Pro spuštění této aplikace uvnitř skriptu využívám knihovny \textit{subprocess}.
+Bohužel úplné nahrazení \textit{urrlib} aplikací \textit{GNU Wget} poměrně výrazně zpomalilo proces kolekce odkazů. Bylo nutné každé stránce dát určitý časový limit
+na stažení. Většina stránek je stažena do 1 sekundy, ale pokud chci stáhnout i zbylé stránky, které jsou umístěny na pomalejších, méně dostupných
+nebo vzdálených serverech, je nezbytné časový limit zvýšit alespoň na 3 sekundy.
 
-
-\chapter{Typografické a~jazykové zásady}
-Při tisku odborného textu typu {\it technická zpráva} (anglicky {\it technical report}), ke kterému patří například i~text kvalifikačních prací, se často volí formát A4 a~často se tiskne pouze po~jedné straně papíru. V~takovém případě volte levý okraj všech stránek o~něco větší než pravý -- v~tomto místě budou papíry svázány a~technologie vazby si tento požadavek vynucuje. Při vazbě s~pevným hřbetem by se levý okraj měl dělat o~něco širší pro tlusté svazky, protože se stránky budou hůře rozevírat a~levý okraj se tak bude oku méně odhalovat.
-
-Horní a~spodní okraj volte stejně veliký, případně potištěnou část posuňte mírně nahoru (horní okraj menší než dolní). Počítejte s~tím, že při vazbě budou okraje mírně oříznuty.
-
-Pro sazbu na stránku formátu A4 je vhodné používat pro základní text písmo stupně (velikosti) 11 bodů. Volte šířku sazby 15 až 16 centimetrů a~výšku 22 až 23 centimetrů (včetně případných hlaviček a~patiček). Proklad mezi řádky se volí 120 procent stupně použitého základního písma, což je optimální hodnota pro rychlost čtení souvislého textu. V~případě použití systému LaTeX ponecháme implicitní nastavení. Při psaní kvalifikační práce se řiďte příslušnými závaznými požadavky.
-
-Stupeň písma u~nadpisů různé úrovně volíme podle standardních typografických pravidel. 
-Pro všechny uvedené druhy nadpisů se obvykle používá polotučné nebo tučné písmo (jednotně buď všude polotučné nebo všude tučné). Proklad se volí tak, aby se následující text běžných odstavců sázel pokud možno na {\it pevný rejstřík}, to znamená jakoby na linky s~předem definovanou a~pevnou roztečí.
-
-Uspořádání jednotlivých částí textu musí být přehledné a~logické. Je třeba odlišit názvy kapitol a~podkapitol -- píšeme je malými písmeny kromě velkých začátečních písmen. U~jednotlivých odstavců textu odsazujeme první řádek odstavce asi o~jeden až dva čtverčíky (vždy o~stejnou, předem zvolenou hodnotu), tedy přibližně o~dvě šířky velkého písmene M základního textu. Poslední řádek předchozího odstavce a~první řádek následujícího odstavce se v~takovém případě neoddělují svislou mezerou. Proklad mezi těmito řádky je stejný jako proklad mezi řádky uvnitř odstavce.
-
-Při vkládání obrázků volte jejich rozměry tak, aby nepřesáhly oblast, do které se tiskne text (tj. okraje textu ze všech stran). Pro velké obrázky vyčleňte samostatnou stránku. Obrázky nebo tabulky o~rozměrech větších než A4 umístěte do písemné zprávy formou skládanky všité do přílohy nebo vložené do záložek na zadní desce.
-
-Obrázky i~tabulky musí být pořadově očíslovány. Číslování se volí buď průběžné v~rámci celého textu, nebo -- což bývá praktičtější -- průběžné v~rámci kapitoly. V~druhém případě se číslo tabulky nebo obrázku skládá z~čísla kapitoly a~čísla obrázku/tabulky v~rámci kapitoly -- čísla jsou oddělena tečkou. Čísla podkapitol nemají na číslování obrázků a~tabulek žádný vliv.
-
-Tabulky a~obrázky používají své vlastní, nezávislé číselné řady. Z toho vyplývá, že v~odkazech uvnitř textu musíme kromě čísla udat i~informaci o~tom, zda se jedná o~obrázek či tabulku (například \uv{\ldots {\it viz tabulka 2.7} \ldots}). Dodržování této zásady je ostatně velmi přirozené.
-
-Pro odkazy na stránky, na čísla kapitol a~podkapitol, na čísla obrázků a~tabulek a~v~dalších podobných příkladech využíváme speciálních prostředků DTP programu, které zajistí vygenerování správného čísla i~v~případě, že se text posune díky změnám samotného textu nebo díky úpravě parametrů sazby. Příkladem takového prostředku v~systému LaTeX je odkaz na číslo odpovídající umístění značky v~textu, například návěští ($\backslash${\tt ref\{navesti\}} -- podle umístění návěští se bude jednat o~číslo kapitoly, podkapitoly, obrázku, tabulky nebo podobného číslovaného prvku), na stránku, která obsahuje danou značku ($\backslash${\tt pageref\{navesti\}}), nebo na literární odkaz ($\backslash${\tt cite\{identifikator\}}).
-
-Rovnice, na které se budeme v~textu odvolávat, opatříme pořadovými čísly při pravém okraji příslušného řádku. Tato pořadová čísla se píší v~kulatých závorkách. Číslování rovnic může být průběžné v~textu nebo v~jednotlivých kapitolách.
-
-Jste-li na pochybách při sazbě matematického textu, snažte se dodržet způsob sazby definovaný systémem LaTeX. Obsahuje-li vaše práce velké množství matematických formulí, doporučujeme dát přednost použití systému LaTeX.
-
-Mezeru neděláme tam, kde se spojují číslice s~písmeny v~jedno slovo nebo v~jeden znak -- například {\it 25krát}.
-
-Členicí (interpunkční) znaménka tečka, čárka, středník, dvojtečka, otazník a~vykřičník, jakož i~uzavírací závorky a~uvozovky se přimykají k~předcházejícímu slovu bez mezery. Mezera se dělá až za nimi. To se ovšem netýká desetinné čárky (nebo desetinné tečky). Otevírací závorka a~přední uvozovky se přimykají k~následujícímu slovu a~mezera se vynechává před nimi -- (takto) a~\uv{takto}.
-
-Pro spojovací a~rozdělovací čárku a~pomlčku nepoužíváme stejný znak. Pro pomlčku je vyhrazen jiný znak (delší). V~systému TeX (LaTeX) se spojovací čárka zapisuje jako jeden znak \uv{pomlčka} (například \uv{Brno-město}), pro sázení textu ve smyslu intervalu nebo dvojic, soupeřů a~podobně se ve zdrojovém textu používá dvojice znaků \uv{pomlčka} (například \uv{zápas Sparta -- Slavie}; \uv{cena 23--25 korun}), pro výrazné oddělení části věty, pro výrazné oddělení vložené věty, pro vyjádření nevyslovené myšlenky a~v~dalších situacích (viz Pravidla českého pravopisu) se používá nejdelší typ pomlčky, která se ve zdrojovém textu zapisuje jako trojice znaků \uv{pomlčka} (například \uv{Další pojem --- jakkoliv se může zdát nevýznamný --- bude neformálně definován v~následujícím odstavci.}). Při sazbě matematického mínus se při sazbě používá rovněž odlišný znak. V~systému TeX je ve zdrojovém textu zapsán jako normální mínus (tj. znak \uv{pomlčka}). Sazba v~matematickém prostředí, kdy se vzoreček uzavírá mezi dolary, zajistí vygenerování správného výstupu.
-
-Lomítko se píše bez mezer. Například školní rok 2008/2009.
-
-Pravidla pro psaní zkratek jsou uvedena v~Pravidlech českého pravopisu \cite{Pravidla}. I~z~jiných důvodů je vhodné, abyste tuto knihu měli po ruce. 
+\section{Paralelní přístup}
+Jak bylo zmíněno výše, aplikace \textit{GNU Wget} nemohla úplně nahradit \textit{urllib}, kvůli časové náročnosti. Proto byla zvolena zlatá střední cesta a v případě,
+že \textit{urllib} selže, stránku se pokusila stáhnout aplikace \textit{GNU Wget}. Sice jsem dosáhl rychlejšího stahování, ale stále to nestačilo. Protože se ale většinu
+času čeká na odpověď serveru a proces je uspaný, rozhodl jsem se zvolit paralelní přístup. Místo toho, aby na odpověď čekal jeden proces, čekalo na ni
+hned několik procesů. K paralelizaci jsem využil modulu \textit{concurrent.futures} a dosáhl jsem několikanásobného zrychlení. Veškerá rizika,
+která s sebou přináší paralelní zpracování, byla vyřešebńa přidělením maximální doby pro zpracování jednoho odkazu. Pokud rodič čekal příliš
+dlouho na potomka, potomek byl zabit a rodič pokračoval v práci.
 
 
-\section{Co to je normovaná stránka?}
-Pojem {\it normovaná stránka} se vztahuje k~posuzování objemu práce, nikoliv k~počtu vytištěných listů. Z historického hlediska jde o~počet stránek rukopisu, který se psal psacím strojem na speciální předtištěné formuláře při dodržení průměrné délky řádku 60 znaků a~při 30 řádcích na stránku rukopisu. Vzhledem k~zápisu korekturních značek se používalo řádkování 2 (ob jeden řádek). Tyto údaje (počet znaků na řádek, počet řádků a~proklad mezi nimi) se nijak nevztahují ke konečnému vytištěnému výsledku. Používají se pouze pro posouzení rozsahu. Jednou normovanou stránkou se tedy rozumí 60*30 = 1800 znaků. Obrázky zařazené do textu se započítávají do rozsahu písemné práce odhadem jako množství textu, které by ve výsledném dokumentu potisklo stejně velkou plochu.
+\section{Deduplikace}
+Při zpracování rozsáhlých webových kolekcích je potřeba provádět deduplikaci dat. Každou staženou webovou stránku je potřeba zpracovat
+dalšími nástroji a to znamená, že jim musíme věnovat určitý procesorový čas. Navíc je zbytečné archivovat jednu a tu samou stránku
+vícekrát, proto je potřeba už při stahování článku dbát důraz na to, abychom opakovaně nestáhli tutéž stránku znovu.
+Je třeba si uvědomit, že v této fázi celého procesu zpracování máme pouze odkazy a jediný možný způsob deduplikace dat je zpracovat každý
+odkaz právě jednou. V novém systému se deduplikace řeší na úrovni kolekce odkazů. Kolektor odkazů si vede soubory, ve kterých jsou seznamy již
+zpracovaných odkazů. Klade se přitom důraz na to, aby s tímto souborem manipuloval vždy právě jeden kolektor a sám kolektor si tyto soubory
+u sebe držel minimální dobu a nedocházelo tak ke zbytečné ztrátě deduplikačních dat a poté i tvorbě následných duplicit.
 
-Orientační rozsah práce v~normostranách lze v~programu Microsoft Word zjistit pomocí funkce {\it Počet slov} v~menu {\it Nástroje}, když hodnotu {\it Znaky (včetně mezer)} vydělíte konstantou 1800. Do rozsahu práce se započítává pouze text uvedený v~jádru práce. Části jako abstrakt, klíčová slova, prohlášení, obsah, literatura nebo přílohy se do rozsahu práce nepočítají. Je proto nutné nejdříve označit jádro práce a~teprve pak si nechat spočítat počet znaků. Přibližný rozsah obrázků odhadnete ručně. Podobně lze postupovat i~při použití OpenOffice. Při použití systému LaTeX pro sazbu je situace trochu složitější. Pro hrubý odhad počtu normostran lze využít součet velikostí zdrojových souborů práce podělený konstantou cca 2000 (normálně bychom dělili konstantou 1800, jenže ve zdrojových souborech jsou i~vyznačovací příkazy, které se do rozsahu nepočítají). Pro přesnější odhad lze pak vyextrahovat holý text z~PDF (např. metodou cut-and-paste nebo {\it Save as Text\ldots}) a~jeho velikost podělit konstantou 1800. 
+\section{Ukládání stažených dat}
+Stažené stránky se dlouhodobě ukládají a proto je potřeba zvolit vhodnou formu komprese dat. Dnes existuje spousta nástrojů umožňující
+kompresi dat, k obecně nejznámějším patří asi WinRAR, 7-zip nebo gzip. Použití WinRAR a 7-zip je přinejmenším nevhodné v tomto projektu,
+proto jsem se rozhodoval mezi výše zmíněným nástrojem gzip a ne tolik známým xz. Oba nástroje mají své výhody.
+Mezi výhody formátu xz patří menší výsledná velikost souborů, ovšem za cenu rychlosti. Formát gzip má na druhou stanu
+relativně rychlou kompresi a dekompresi dat \cite{GZIP_VS_XZ}. Protože, jak již bylo zmíněno,
+se stránky budou ukládat dlouhodobě, zvolil jsem formát xz.
+
+\section{Srovnání s původním systémem}
+V této kapitole budete obeznámeni se základnímy prvky jak původního, tak nového systému a jejich zásadní rozdíly.
+
+\subsection{Původní systém}
+Původní systém využíval stahování stránek pouze pomocí \textit{urllib}. Kolekci odkazů z RSS a Atom zdrojů zastávaly 2
+skripty -- \textit{collect.py} a \textit{download.py}. Skripty byly napsány v jazyce Python verze Python2.7 pro projekt
+Newsbrief eu \cite{NEWSBRIEF}.
+
+Kolekce odkazů byla implementovaná skriptem \textit{collect.py}. Samotná kolekce se spouštěla pomocí nástroje \textit{cron} každé
+2 hodiny. Později byl skript přepsán do jazyka Python verze Python3.5 a optimalizován. To vystačilo až do doby, než se začaly hromadit
+RSS zdroje a skript přestával stíhat sbírat odkazy z RSS a ATOM zdrojů. Stávalo se běžně, že v jednu chvíli běželo najednou několik kolekcí odkazů
+a navzájem si přepisovaly deduplikační soubory a tak se jedna stránka mohla stáhnout vícekrát. Tehdy přestal být tento nástroj vhodný
+pro svůj účel.
+
+O stahování stránek se staral skript \textit{download.py}. Stejně jako \textit{collect.py}, i tento nástroj se spouštěl pravidelně
+pomocí \textit{cronu}, akorát se namísto každé 2 hodiny spouštěl jednou za 24 hodin. Skript byl následně přepsán do jazyka Python3.6, kvůli chybě
+ve vertikalizátoru \ref{vertikalizator}.
+
+\subsection{Nový systém}
+Momentálně se, na rozdíl od předchozích nástrojů, stahují stránky paralelně. O spouštění kolekce, stahování stránek, deduplikaci odkazů a vedení statistik se
+stará skript \textit{big\_brother.py}, který pravidelně spouští 2 skripty. Prvním z nich je skript \textit{link\_collector.py}, využívající třídy \textit{Link\_collector}.
+Tato třída je schopna vyhledat RSS a ATOM zdroje na stažených stránkách a extrahovat z RSS a ATOM souborů odkazy na nové články.
+Navíc je tato třída přímým potomkem třídy \textit{Page\_downloader}, a díky dědičnosti je schopna stahovat stránky jak sekvenčně, tak paralelně.
+
+Stahování je řešeno skriptem \textit{page\_downloader.py}, který využívá třídy \textit{Page\_generator}. Tato třída je schopna se dotazovat jednotlivých serverů
+s časovým odstupem mezi dvěma dotazy na tentýž server a stahovat z nich stránky. Navíc je, stejně jako \textit{Link\_collector.py}, přímým potomkem
+třídy \textit{Page\_downloader} a získává tak možnost paralelního i sekvenčního stahování souborů ze serverů.
+
+\chapter{Získání čistého textu ze stažených stránek}
+Ve chvíli, kdy jsou k dispozici data, lze započít další zpracování. Pro práci s html souborem existuje celá řada nástrojů
+programovaných v mnoha jazycích, přesto ale je zde velké množství překážek.
+
+\section{Problémy při zpracování webových stránek}
+Jak již bylo dříve zmíněno, internet je velice rozmanitý a existuje nespočet způsobů, jak lze vytvořit webovou stránku.
+
+\subsection{Kódování obsahu}
+Kódováním obsahu se zde nemyslí šifrování, ale způsob, jakým jsou datově reprezentovány jednotlivé znaky. Podle dostupných
+statistik se s drtivou převahou používá kódování UTF-8 -- až 91 \% stránek. Další 4 \% využívají ISO-8859-1 a 1 \%
+vývojářů zvolilo kódování Windows-1251 \cite{W3TECHS}. Zbylá procenta obsahují ostatní kódování, kterých je nepřeberné množství.
+
+Pří použití nástroje \textit{urllib} \ref{urllib} není problém zjistit, jaké kódování stránka používá. Protože je ale použit
+i nástroj \textit{GNU WGET} \ref{wget}, je potřeba kódování vyčíst z hlavičky HTTP odpovědi serveru. Z vlastní zkušenosti však mohu říct, že
+ne vždy je možné tímto způsobem kódování zjistit. Tento problém se vyskytl zatím pouze při zpracování starších archivů a to pouze ojediněle.
+
+V případě, že se nepovede kódování obsahu zjistit, je využito modulu \textit{chardet}, který je schopen rozpoznat
+hned několik kódování. V případě, že i tento nástroj selže, aplikace není schopna stránku zpracovat a stránka je zahozena.
+
+\subsection{Reklamy}
+Spousta stránek obsahuje reklamy. Reklama nemusí vůbec rušit strukturu obsahu, ale také může být vložena doprostřed
+odstavce. Právě v této chvíli je schopná zmást jakýkoliv nástroj, který pracuje s obsahem stránky,
+například proces analýzy textu nebo vyhledávač.
+
+\subsubsection{Detekce reklam}
+V dnešní době je spousta nástrojů, které jsou schopny detekovat reklamy na stránkách a odstranit je. Mezi nejznámější
+patří například Adblock. Nejen Adblock, ale i jemu podobné nástroje pracují s množinou pravidel. Při zpracování HTML
+elementu, zejména \textit{<img>} (obrázky) a \textit{<div>} (blokový element), zjistí identifikátor a třídu daného elementu a na
+základě pravidel prvek zobrazí či nikoli. V případě externích odkazů (element \textit{<a>}) se zjišťuje adresa \cite{ADBLOCK}.
+
+V této práci bylo hned několik pokusů o využití těchto nástrojů nebo jen použití samotných pravidel. Problémem byla náročnost procesu
+na výpočetní výkon. Celý proces zpracování se zpomalil a výsledky nebyly tak dobré, jak se očekávalo. Z těchto důvodů tyto nástroje
+nebyly vůbec použity.
+
+\subsubsection{Rozdělení obsahu do logických celků}
+Webové stránky, zejména zpravodajské deníky, mají text rozdělený do určitých bloků, za účelem
+znovupoužitelnosti a přehlednosti kódu, co se uživatelů týče, tak i přívětivějšího vzhledu a
+snadnějšího použití.
+
+Nové nástroje jsou schopny takového členení využít a díky tomu označit pro nástroje,
+které s textem budou nadále pracovat, kdy text pokračuje a kdy se text týká už něčeho jiného.
+Toto řešení sice není tak dokonalé jako odstranění celé reklamy z textu, ale jeho náročnost na výpočetní
+výkon je přijatelná a svůj účel to dokáže splnit. HTML elementy, pomocí
+kterých se rozděluje text do logických bloků, jsou \textit{<p>} (odstavce),
+\textit{<div>} (blokové elementy) \textit{<h1>, <h2>, <h3>, <h4> a <h5>} (nadpisy).
+
+\subsection{Použité nástroje}
+Pro extrakci textu z webových stránek bylo vyzkoušeno poměrně několik postupů a nástrojů. Co se týče použitých
+programovacích jazyků, jendalo se o C a Python.
+
+\subsubsection{Jednoduchý parser napsaný v jazyce C}
+Vytvořit jednoduchý a rychlý program v jazyce C byla první myšlenkou a pokusem. Vytvořit
+nástroj na extrakci textu z HTML kódu není zas tolik složité, dokud není potřeba detekovat reklamy nebo
+členit text do logických bloků. Dalším problémem byly HTML entity, které je třeba nahradit za reálné znaky.
+
+\subsubsection{Beatiful soup}
+\textit{Beatiful soup} je knihovna pro jazyk Python určená k extrakci dat z HTML a XML dokumentů \cite{BEATIFULSOUP}.
+Použit9 této knihovny je relativně jednoduché a dokumentace je výborná. Pokud by bylo v budoucnu potřeba použít pravidla pro
+blokování reklam, je ideální volbou. Tato knihovna plnila svůj účel dlouhou dobu, přestože její slabina byla už od samého začátku
+zřejmá -- rychlost. Jakmile se projekt rozšířil o další zpracování, byl modul, používající tuto knihovnu, brzdou v celém procesu
+a bylo zřejmé, že je potřeba najít efektivnější řešení.
+
+\subsubsection{Regulární výrazy}
+Jednoduchou a relativně efektivní cestou se ukázalo použití regulárních výrazů. Sice se zkomplikovala detekci reklam na stránkách,
+ale v době, kdy byly regulární výrazy zapojeny do procesu zpracování, bylo jasné, že se žádné rozpoznávání reklam
+a jejich odstranění kvůli výkonosti provádět nebude.
+
+\subsubsection{MyHTML}
+Pro zajímavost je zde uveden ještě modul \textit{MyHTML} od Alexandera Borisova. Celý modul je psán v jazyce C,
+konkrétně standard C99 \cite{MyHTML}. Tento modul do procesu nebyl nikdy zapojen, kvůli nedostatku času -- narazil jsem na něj
+příliš pozdě. Navíc má velké nedostatky v dokumentaci a ke konfiguraci nástroje a samotného sestavení aplikace je
+potřeba oprávnění administrátora. Program byl proto sestavin na osobním počítači, kde byl i vyzkoušen. Modul je poměrně rychlý
+a je jednou možných z alternativ, které by mohli v budoucnu nahradit alespoň částečné použití regulárních výrazů.
+
+\subsection{Původní systém}
+V původním systému je k tomuto účelu použita aplikace zvaná vertikalizátor \ref{vertikalizator}, který využívá
+mimo jiné nástroje \textit{jusText}.
+
+\subsubsection{Nástroj jusText}
+\textit{jusText} je nástroj určený k odstranění boilerplate obsahu, například navigační odkazy, hlavička HTML stránky.
+Nástroj je vhodný pro použití ve zpracování HTML stránek \cite{JUSTEXT}. Potenciální nevýhodou tohoto nástroje je nutné mít tzv. \textit{stoplist}
+na základě kterého se vyhodnocuje, zda je daný blok textu boilerplate -- text je nechtěný v dalším zpracování. \textit{Stoplist}
+obsahuje slova (\textit{stop words}), která se snaží nástroj natít v textovém bloku. Na základě množství těchto slov v text,
+je danému bloku přidělena třída, pomocí které lze určit, zda text je vhodné pro další zpracování text zachovat nebo je lepší
+text odstranit \cite{JUSTEXT_ALG}.
 
 
+
+\chapter{Převod textu do vertikálu} %idealne 10 stran
+\subsection{Použité nástroje}
+\subsection{Paralelní zpracování}
+\label{vertikalizator}
+\subsection{Srovnání se starým systémem}
+\chapter{Tagging} % idealne 10 stran
+\subsection{Použité nástroje}
 \chapter{Závěr}
-Závěrečná kapitola obsahuje zhodnocení dosažených výsledků se zvlášť vyznačeným vlastním přínosem studenta. Povinně se zde objeví i zhodnocení z pohledu dalšího vývoje projektu, student uvede náměty vycházející ze zkušeností s řešeným projektem a uvede rovněž návaznosti na právě dokončené projekty.
-
 %=========================================================================
