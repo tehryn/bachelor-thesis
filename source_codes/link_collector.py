@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+Tento skript slouzi ke kolekci odkazu.
+Autor: Jiří Matějka
+Verze: 2.002 (2018-04-10)
+"""
 import sys
 from Link_collector import Link_collector
 from Functions import get_setting, print_help, get_exception_info
@@ -78,7 +83,7 @@ possible_arguments = [
                          'ktereho se stahuje stranka s odkazy. Vychozi hodnota je 1.'
     },
     {
-        'names'        : [ '--multithreading',   '-m' ],
+        'names'        : [ '--multiprocessing',   '-m' ],
         'optional'     : True,
         'has_tail'     : 1,
         'word_index'   : 'threads',
@@ -149,14 +154,14 @@ rss_links = set()
 for file_name in settings[ 'input' ]:
     input_file = None
     try:
-        input_file = open( file_name, 'r' ) if ( type( file_name ) is str ) else file_name
+        input_file = open( file_name, 'r' ) if ( isinstance( file_name, str ) ) else file_name
     except:
         error = get_exception_info( 'Nelze otevrit vstupni soubor "' + file_name + '", soubor preskakuji a pokracuji v cinnosti.\n\n' )
         err.write( error )
         continue
     for line in input_file:
         rss_links.add( line.strip() )
-    if ( type( file_name ) is str ):
+    if ( isinstance( file_name, str ) ):
         input_file.close()
 
 

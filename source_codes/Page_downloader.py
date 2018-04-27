@@ -1,7 +1,7 @@
-import Functions
 from urllib.request import urlopen
 from subprocess import Popen, PIPE
 import concurrent.futures
+import Functions
 
 class Page_downloader( object ):
     """docstring for Page_downloader."""
@@ -26,7 +26,7 @@ class Page_downloader( object ):
         try:
             page = urlopen( url, timeout=self._wait ) # muze vyhodit vyjimku
             http_header = data.info()
-            http_header = Functions.decode_data( str( http_header ), 'utf-8' )
+            http_header = Functions.decode_data( str( http_header ) )
             if data.getcode() == 200:
                 http_header  = "HTTP/1.1 200 OK\r\n" + http_header
                 page         = page.read() # reads content of a page
@@ -34,15 +34,14 @@ class Page_downloader( object ):
                 raise Exception( 'Navratovy kod pro urllib neni 200 OK' )
         except:
             data      = Popen( [ 'wget', '-q', '-T', str( self._wait ), '-t', str( self._tries ), '-SO', '-', url ], stdout=PIPE, stderr=PIPE )
-            exception = None
             page, http_header = data.communicate()
-            http_header = Functions.decode_data( http_header, 'utf-8' ) if http_header else ''
+            http_header = Functions.decode_data( http_header ) if http_header else ''
             if ( data.returncode != 0 ): # Odpoved je 200 OK
                 info_message = '\nOdpoved:' + http_header + '\n' if type( http_header ) is str else ''
                 info = Functions.get_exception_info( 'Nelze stahnout stranku "' + url + '"' + info_message )
                 return { 'error':True, 'value':info, 'url':url, 'response':http_header }
         try:
-            page = Functions.decode_data( page, 'utf-8' ) # teoreticky muze vyhodit vyjimku
+            page = Functions.decode_data( page ) # teoreticky muze vyhodit vyjimku
         except:
             try:
                 page = page.decode( 'utf-8', errors='ignore' ) # muze vyhodit vyjimku

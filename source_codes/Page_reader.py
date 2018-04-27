@@ -3,22 +3,24 @@ import lzma
 import gzip
 import uuid
 import warc
-from new_Page import Page
+from Page import Page
 
 class Page_reader( object ):
-    def __init__( self, filename=None ):
+    def __init__( self, filename=None, old_style = False ):
         if ( filename is None ):
             self._file = sys.stdin.buffer
         elif ( filename.endswith( '.xz' ) ):
-            self._file = lzma.open( filename, 'r' )
+            self._file = lzma.open( filename, 'rb' )
         elif ( filename.endswith( '.gz' ) ):
-            self._file = gzip.open( filename, 'r' )
+            self._file = gzip.open( filename, 'rb' )
         else:
-            self._file = open( filename, 'r' )
+            self._file = open( filename, 'rb' )
         self._warc = warc.WARCFile( fileobj = self._file )
+        self._old_style = old_style
 
     def __iter__( self ):
         first = True
+        cnt   = 1
         for record in self._warc:
             if ( first ):
                 first = False
@@ -37,7 +39,14 @@ class Page_reader( object ):
                 warc_id = record[ 'WARC-Record-ID' ][ 10:-1 ]
             else:
                 warc_id = str( uuid.uuid1() )
-            yield Page( page = content, url = uri, http_response = response.decode(), page_id = warc_id )
+
+            try:
+                yield Page( page = content, url = uri, http_response = response.decode(), page_id = warc_id, old_style = self._old_style )
+                sys.stdout.write( '-----' + str( cnt ) + '-----\n' )
+                cnt += 1
+            except ValueError:
+                pass
+        sys.stderr.write( '====' + str( cnt ) + '====\n' )
 
 if __name__ == '__main__':
     test_file = None

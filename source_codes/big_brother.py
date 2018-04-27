@@ -171,19 +171,44 @@ class Collector_thread ( threading.Thread ):
         collector   = None
 
         if dedup_files:
-            collector   = [ path + '/link_collector.py', '-i', rss_sources[ self.key ], '-o', output_file, '-e', log_file, '-w', '5', '-m', '50', '-d' ] + dedup_files
+            collector   = [ path + '/link_collector.py', '-i', rss_sources[ self.key ], '-e', log_file, '-w', '5', '-m', '50', '-d' ] + dedup_files
         else:
-            collector   = [ path + '/link_collector.py', '-i', rss_sources[ self.key ], '-o', output_file, '-e', log_file, '-w', '5', '-m', '50' ]
+            collector   = [ path + '/link_collector.py', '-i', rss_sources[ self.key ], '-e', log_file, '-w', '5', '-m', '50' ]
 
         process        = subprocess.Popen( collector, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
         stdout, stderr = process.communicate()
         collector_finished_s.release()
 
         with email_messages_l:
-            if ( stderr ):
-                email_messages.append( collection_filename + ": Link_collector skoncil s fatalni chybou:\n" + stderr.decode( 'utf-8' ) )
             if ( stdout ):
-                email_messages.append( collection_filename + ": Link_collector skoncil s vystupem na stdout:\n" + stdout.decode( 'utf-8' ) )
+                num = sum( 1 for c in stdout.decode( 'utf-8' ) if c == '\n'  )
+                try:
+                    with open( output_file, 'w' ) as f:
+                        f.write( stdout.decode( 'utf-8' ) )
+                    email_messages.append(
+                        time.strftime(
+                            "%d-%m-%Y %H:%M " + self.key + ": ",
+                            time.localtime( time.time() )
+                        )
+                        + "Kolekce byla dokoncena," + "bylo nalezeno " + str( num ) + " stranek."
+                        + ", vstupni soubory jsou " + rss_sources[ self.key ] + ", vystupni souborem je: " + output_file
+                    )
+                except:
+                    email_messages.append(
+                        time.strftime(
+                            "%d-%m-%Y %H:%M " + self.key + ": ",
+                            time.localtime( time.time() )
+                        )
+                        + "Nemohl jsem ulozit nalezene stranky z rss zdroju do souboru: '" + output_file + "'"
+                    )
+            if ( stderr ):
+                email_messages.append(
+                    time.strftime(
+                        "%d-%m-%Y %H:%M " + self.key + ": ",
+                        time.localtime( time.time() )
+                    )
+                    + "Kolekce skoncila s fatalni chybou: '" + stderr.decode( 'utf-8' ) + "'"
+                )
 
         with semaphores[ key ][ 'files_to_download' ]:
             files_to_download[ self.key ].add( output_file )
@@ -213,15 +238,24 @@ class Downloader_thread ( threading.Thread ):
             stdout, stderr = process.communicate()
 
             with email_messages_l:
-                email_messages.append( time.strftime( "%d-%m-%Y %H:%M", time.localtime( time.time() ) ) + " Stahovani bylo dokonceno, vstupni soubory jsou " + str( input_files ) )
-                email_messages.append( time.strftime( "%d-%m-%Y %H:%M", time.localtime( time.time() ) ) + " Stahovani bylo dokonceno, vystupni soubor je " + output_file )
-
-                if ( stderr ):
-                    email_messages.append( download_filename + "Page_downloader skoncil s fatalni chybou:\n" + stderr.decode( 'utf-8' ) )
                 if ( stdout ):
                     num = sum( 1 for c in stdout.decode( 'utf-8' ) if c == '\n'  )
-                    email_messages.append( download_filename + ": bylo stazeno " + str( num ) + " stranek." )
-
+                    email_messages.append(
+                        time.strftime(
+                            "%d-%m-%Y %H:%M " + self.key + ": ",
+                            time.localtime( time.time() )
+                        )
+                        + "Stahovani bylo dokonceno," + "bylo stazeno " + str( num ) + " stranek."
+                        + ", vstupni soubory jsou " + str( input_files ) + ", vystupni souborem je: " + output_file
+                    )
+                if ( stderr ):
+                    email_messages.append(
+                        time.strftime(
+                            "%d-%m-%Y %H:%M " + self.key + ": ",
+                            time.localtime( time.time() )
+                        )
+                        + "Stahovani skoncilo s fatalni chybou: '" + stderr.decode( 'utf-8' ) + "'"
+                    )
             for filename in input_files:
                 os.rename( filename, filename[:-9] + '.downloaded' )
         last_downloads[ self.key ] = time.time()
@@ -250,12 +284,12 @@ while ( True ):
                         content = '\n'.join( email_messages )
                         email_messages = list()
                         msg = MIMEText( content )
-                        msg['Subject'] = 'Big brother - debugovani a testovani'
-                        msg['From']    = 'xmatej52@stud.fit.vutbr.cz'
-                        msg['To']      = 'xmatej52@stud.fit.vutbr.cz'
+                        msg['Subject'] = 'Pravidelna zprava od Velkeho bratra'
+                        msg['From']    = email
+                        msg['To']      = email
 
-                        s = smtplib.SMTP('localhost')
-                        s.sendmail('xmatej52@stud.fit.vutbr.cz', 'xmatej52@stud.fit.vutbr.cz', msg.as_string())
+                        s = smtplib.SMTP( 'localhost' )
+                        s.sendmail( email, email, msg.as_string() )
                         s.quit()
                 last_email_sent = time.time()
     nap_time = collect_interval

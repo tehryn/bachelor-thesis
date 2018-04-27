@@ -1,18 +1,41 @@
+"""
+V tomto modulu se nachazi implemetace tridy Link_collector.
+Autor: Jiří Matějka
+Verze: 2.001 (2018-04-10)
+"""
 import xml.etree.ElementTree as ET
-import Functions
 import re
+from time import time
+
+import Functions
 from Page_downloader import Page_downloader
 
 class Link_collector( Page_downloader ):
-    """docstring for Link_collecter."""
+    """
+    Link_collector je tridou, ktera je urcena ke sberu odkazu z RSS a ATOM zdroju popripade
+    vyhledavani techto zdroju v HTML strankach.
+    """
     _dedup_links = set()
 
-    def __init__( self, dedup=set(), wait=1, tries=1 ):
+    def __init__( self, dedup=None, wait=1, tries=1 ):
+        """
+        Konstruktor objektu typu Link_collector.
+
+        dedup - mnozina obsahujici deduplikacni odkazy.
+        wait  - casovy udaj v sekundach, jak dlouho se ma cekat na odpoved serveru.
+        tries - pocet pokusu o pripojeni na server
+        """
+        if ( dedup is None ):
+            dedup = set()
         super().__init__( wait=wait, tries=tries )
         Link_collector._dedup_links  = dedup.union( Link_collector._dedup_links )
 
 
     def find_links( self, page ):
+        """
+        Metoda nalezne vsechny odkazy z RSS a ATOM souboru.
+        page - XML soubor (RSS nebo ATOM feed)
+        """
         custom_parse = False
         custom_links = set()
         root         = None
@@ -26,7 +49,7 @@ class Link_collector( Page_downloader ):
         if ( custom_parse ):
             items = custom_links
             for link in items:
-                if ( link and ( len( link.splitlines() ) <= 1 ) and ( not ( link in self._dedup_links ) ) ):
+                if ( link and ( len( link.splitlines() ) <= 1 ) and ( link not in self._dedup_links ) ):
                     self._dedup_links.add( link )
                     links_found.add( link )
         else:
@@ -36,12 +59,16 @@ class Link_collector( Page_downloader ):
                     link = item.text
                     if ( link ):
                         link = link.strip()
-                        if ( link and ( not ( link in self._dedup_links ) ) ):
+                        if ( link and ( link not in self._dedup_links ) ):
                             links_found.add( link )
                             self._dedup_links.add( link )
         return links_found
 
     def collect_links_from_url( self, url ):
+        """
+        Metoda nalezne vsechny odkazy z RSS nebo ATOM feedu.
+        url - odkaz na RSS/ATOM feed.
+        """
         page = super().get_page_from_url( url )
         if ( page[ 'error' ] ):
             super()._set_error( page[ 'value' ], url )
@@ -49,7 +76,12 @@ class Link_collector( Page_downloader ):
 
         return self.find_links( page[ 'value' ] )
 
-    def find_rss_from_page( self, page ):
+    @staticmethod
+    def find_rss_from_page( page ):
+        """
+        Metoda nalezne vsechny odkazy na RSS nebo ATOM zdroje.
+        page - HTML soubor, ze ktereho budou ziskany odkazy
+        """
         data = set()
         urlPat = re.compile( r'((<a|<link) [^<>]*?href=(\"|\')([^<>\"\']*?)(\"|\')[^<>]+)' )
         result = re.findall( urlPat, page )
@@ -58,40 +90,52 @@ class Link_collector( Page_downloader ):
                 data.add( link[3] )
         return data
 
-    def find_rss_from_url( self, url ):
+    @staticmethod
+    def find_rss_from_url( url ):
+        """
+        Metoda nalezne vsechny odkazy na RSS nebo ATOM zdroje.
+        url - odkaz na HTML soubor, ze ktereho budou ziskany odkazy
+        """
         page = super().get_page_from_url( url )
         if ( page[ 'error' ] ):
-            self._set_error( page[ 'value' ], url )
+            super()._set_error( page[ 'value' ], url )
             return None
 
-        return self.find_rss_from_page( page[ 'value' ] )
+        return Link_collector.find_rss_from_page( page[ 'value' ] )
 
 
     def collect_links_from_urls( self, urls ):
+        """
+        Metoda najde odkazy ze zdroju uvedenych v iterovatelnem objektu (mnozina, seznam, ...)
+        urls. Pro kazdy z prvek v objektu bude spusten jeden proces.
+        """
         pages       = super().get_multiple_pages_from_urls( urls )
         links_found = set()
         for url, page in zip( urls, pages ):
             if ( page[ 'error' ] ):
                 self._set_error( page[ 'value' ], url )
             else:
-                new_links   = self.find_links( page[ 'value' ] )
-                links_found = links_found.union( new_links )
+                links_found = links_found.union( self.find_links( page[ 'value' ] ) )
         return links_found
 
     @staticmethod
     def get_dedup():
+        """
+        Vrati mnozinu s deduplikacnimi odkazy.
+        """
         return Link_collector._dedup_links
 
     @staticmethod
     def clear_dedup():
+        """
+        Odstrani vsechny deduplikacni odkazy.
+        """
         Link_collector._dedup_links = set()
 
 if __name__ == "__main__":
-    from time import time
-
     collector1 = Link_collector()
     collector2 = Link_collector()
-    urls = set(
+    urlss = set(
         [
             'http://gregi.net/category/clanky/feed/',
             'http://gregi.net/feed/',
@@ -111,8 +155,8 @@ if __name__ == "__main__":
     links2 = set()
     print( "Stahuji se stranky, toto muze nejakou chvili trvat..." )
     start = time()
-    for url in urls:
-        new_links = collector1.collect_links_from_url( url )
+    for uri in urlss:
+        new_links = collector1.collect_links_from_url( uri )
         if new_links:
             links1 = links1.union( new_links )
     end = time()
@@ -120,16 +164,16 @@ if __name__ == "__main__":
     error1 = collector1.get_errors_info()
     Link_collector.clear_dedup()
     start = time()
-    links2 = collector2.collect_links_from_urls( urls )
+    links2 = collector2.collect_links_from_urls( urlss )
     end = time()
     print( "Paralelni stahovani dokonceno za " + str( end - start ) + " sekund." )
     error2 = collector2.get_errors_info()
     print( "Kontrola stejne funkcionality u sekvencniho a paralelniho zpracovani: " + str( links1 == links2 ) )
-    print( "Pocet rss zdroju: " + str( len( urls ) ) + ", Pocet nalezenych stranek: " + str( len( links1.union( links2 ) ) ) )
+    print( "Pocet rss zdroju: " + str( len( urlss ) ) + ", Pocet nalezenych stranek: " + str( len( links1.union( links2 ) ) ) )
     print( "Zacina vyhledavani rss zdroju na nalezenych URL" )
     rss_sources = set()
-    for url in links1:
-        found_rss = collector1.find_rss_from_url( url )
+    for uri in links1:
+        found_rss = collector1.find_rss_from_url( uri )
         if ( found_rss ):
             rss_sources = rss_sources.union( found_rss )
     print( "Nalazeno " + str( len( rss_sources ) ) + " rss zdroju." )

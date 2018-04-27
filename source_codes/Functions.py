@@ -1,25 +1,38 @@
-"""Modul, jehoz obsahem jsou uzitecne funkce, ktere se pouzivaji napric skriptu a modulu."""
+"""Modul, jehoz obsahem jsou uzitecne funkce, ktere se pouzivaji napric spostou skriptu a modulu."""
 import sys
 import traceback
 import chardet
 
-#Exception save on correct use
-def decode_data( data, new_coding='UTF-8' ):
-    """Metoda zjisti, v jakem kodovani je obsah a prelozi ho do jineho kodovani."""
+#Exception unsave
+def decode_data( data ):
+    """Funkce se pokusi zjistit, v jakem kodovani jsou data reprezentovana a pokusi se je dekodovat."""
     encoding = chardet.detect( data )[ 'encoding' ]
     data = data.decode( encoding )
     return data
 
 #Exception unsave
 def get_setting ( possible_arguments, list_of_arguments ):
+    """
+    Funkce zpracuje argumenty programu. Parametr possible arguments je pole se slovniky, list_of_arguments
+    je seznam argumentu.
+    Klice jednotlivych slovniku:
+        names        - seznam jmen, pomocí kterých lze argument zadat
+        optional     - urcuje, zda je argument volitelny nebo ne
+        has_tail     - urcuje zda ma argument 0, 1 nebo N parametru
+        word_index   - index, pod kterym lze zadane hodny zpristupni v hashi vracenem funkci
+        prerequisite - prerekvizity nebo podminky, za kterych je mozne tento argument zadat
+        description  - popis zadaneho argumentu, ktery bude pouzit pro automaticke generovani napovedy
+    """
     def find_tag( argument ):
+        """
+        Funkce nalezne zadany argument
+        """
         found_tag = None
         for tag in possible_arguments:
             if ( argument in tag[ 'names' ] ):
                 found_tag = tag
                 break
         return found_tag
-
     current_tag      = None
     current_tag_name = None
     current_tag_int  = None
@@ -108,6 +121,16 @@ def get_exception_info( custom_info='' ):
 
 #Exception save on correct use
 def print_help( possible_arguments, file_name, output=sys.stdout, author='Vyzkumna skupina KNOT@FIT' ):
+    """
+    Funkce vygeneruje napovedu programu. Parametr possible_arguments je seznamem slovniku.
+    Klice jednotlivych slovniku:
+        names        - seznam jmen, pomocí kterých lze argument zadat
+        optional     - urcuje, zda je argument volitelny nebo ne
+        has_tail     - urcuje zda ma argument 0, 1 nebo N parametru
+        word_index   - index, pod kterym lze zadane hodny zpristupni v hashi vracenem funkci
+        prerequisite - prerekvizity nebo podminky, za kterych je mozne tento argument zadat
+        description  - popis zadaneho argumentu, ktery bude pouzit pro automaticke generovani napovedy
+    """
     optional       = [ arg for arg in possible_arguments if arg[ 'optional' ] ]
     optional_str   = [ '[' + ', '.join( arg[ 'names' ] ) + ']' for arg in optional ]
     obligatory     = [ arg for arg in possible_arguments if not arg[ 'optional' ] ]

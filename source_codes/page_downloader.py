@@ -30,7 +30,7 @@ possible_arguments = [
         'word_index'   : 'output',
         'prerequisite' : None,
         'description'  : 'Vystupni soubor, kam se budou ukladat stazene stranky. Vystupni soubor ' +
-                         'by mel mit vzdy koncovku .warc.xz.'
+                         'by mel mit vzdy koncovku .warc.xz nebo .warc.'
     },
     {
         'names'        : [ '--stored', '-s' ],
@@ -77,7 +77,7 @@ possible_arguments = [
                          'timto parametrem.'
     },
     {
-        'names'        : [ '--multithreading',   '-m' ],
+        'names'        : [ '--multiprocessing',   '-m' ],
         'optional'     : True,
         'has_tail'     : 1,
         'word_index'   : 'threads',
@@ -105,10 +105,6 @@ pause = 1
 if ( 'pause' in settings ):
     pause = settings[ 'pause' ][0]
 
-err = sys.stderr
-if ( 'error' in settings ):
-    err = open( settings[ 'error' ][0], 'w' )
-
 stored = sys.stdout
 if ( 'stored' in settings ):
     stored = open( settings[ 'stored' ][0], 'a' )
@@ -127,19 +123,20 @@ for file_name in settings[ 'input' ]:
         input_file = open( file_name, 'r' ) if ( isinstance( file_name, str ) ) else file_name
     except:
         error = get_exception_info( 'Nelze otevrit vstupni soubor "' + file_name + '", soubor preskakuji a pokracuji v cinnosti.\n\n' )
-        err.write( error )
+        with open( settings[ 'error' ][0], 'w' ) as err:
+            err.write( error )
         continue
     for line in input_file:
         download_links.add( line.strip() )
     input_file.close()
 
-out       = lzma.open( settings[ 'output' ][0], 'wb' )
+out       = lzma.open( settings[ 'output' ][0], 'wb' ) if settings[ 'output' ][0].endswith('.xz') else open( settings[ 'output' ][0], 'wb' )
 generator = Page_generator( pause=pause, wait=wait, iterable=download_links, threads=threads )
 hostname  = subprocess.check_output( "hostname -f", shell=True).decode( 'utf-8' )
 user      = subprocess.check_output( "echo $USER", shell=True).decode( 'utf-8' )
 
-body  = "robots: classic\r\nhostname: " + str( hostname ) + "software: download.py\r\nisPartOf: Cs_media\r\n"
-body += "operator: " + str( user ) + "description: Downloading cz and sk articles\r\npublisher: KNOT (https://knot.fit.vutbr.cz/)\r\n"
+body  = "robots: classic\r\nhostname: " + str( hostname ) + "software: page_downloader.py\r\nisPartOf: Cs_media\r\n"
+body += "operator: " + str( user ) + "description: Downloading pages\r\npublisher: KNOT (https://knot.fit.vutbr.cz/)\r\n"
 body += "format: WARC File Format 1.0\r\nconformsTo: http://bibnum.bnf.fr/WARC/WARC_ISO_28500_version1_latestdraft.pdf\r\n"
 
 warc_header = warc.WARCHeader( { "WARC-Type": "warcinfo", "WARC-Filename" : settings[ 'output' ][0] }, defaults=True )
@@ -155,4 +152,9 @@ for page in generator:
     warc_record.write_to( out )
     stored.write( page[ 'url' ] + '\n' )
 
-sys.stderr.write( generator.get_errors_info() )
+err = sys.stderr
+if ( 'error' in settings ):
+    with open( settings[ 'error' ][0], 'a' ) as err:
+        err.write( generator.get_errors_info() )
+else:
+    err.write( generator.get_errors_info() )
