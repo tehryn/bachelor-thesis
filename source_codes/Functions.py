@@ -165,6 +165,25 @@ def get_data_from_xml( token, page ):
                     page = page[idx2+1:]
     return data
 
+def decode_page( page, response ):
+    encoding = 'utf-8'
+    idx = response.find( 'charset=' )
+    if ( idx >= 0 ):
+        encoding = response[ idx + 8 : ]
+        idx = encoding.find( '\n' )
+        if ( idx >= 0  ):
+            encoding = encoding[ :idx].strip()
+        else:
+            encoding = 'utf-8'
+    try:
+        page = page.decode( encoding )
+    except:
+        try:
+            page = Functions.decode_data( page )
+        except:
+            raise ValueError('Nelze dekodovat stranku')
+    return page
+
 def find_nth( string, substr, n ):
     """Funkce najde N-ty prvek v retezci. Pokud je prvek nalezen, je vracen jeho index, jinak je vracena -1"""
     start = string.find( substr )

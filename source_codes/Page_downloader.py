@@ -41,7 +41,7 @@ class Page_downloader( object ):
                 info = Functions.get_exception_info( 'Nelze stahnout stranku "' + url + '"' + info_message )
                 return { 'error':True, 'value':info, 'url':url, 'response':http_header }
         try:
-            page = Functions.decode_data( page ) # teoreticky muze vyhodit vyjimku
+            page = Functions.decode_page( page, http_header ) # muze vyhodit vyjimku
         except:
             try:
                 page = page.decode( 'utf-8', errors='ignore' ) # muze vyhodit vyjimku

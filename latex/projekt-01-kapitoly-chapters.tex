@@ -14,13 +14,13 @@ systému zpracování. V každé z těchto kapitol se nachází podrobnější p
 problematiky a jejího řešení, použité nástroje a na závěr je porovnání
 s původním systémem.
 
-V přílohách je poté možné vyčíst různé údaje o výkonosti náročnosti projektu a srovnání s původním systémem,
+V přílohách je poté možné vyčíst různé údaje o výkonostní náročnosti projektu a srovnání s původním systémem,
 stručný postup jak tvořit obslužné skripty k vytvořeným knihovnám a
 samotné úkázky jednotlivých kroků zpracování.
 
 \section{Volba tématu}
 Téma Rozšíření systému pro získávání, zpracování a analýzu rozsáhlých kolekcí textů z webu
-jsem si zvolil hlavně kvůli své dvouleté spolupráci s výzkumnou skupinou KNOT \cite{KNOT}, svému zájmu a
+jsem si zvolil hlavně z důvodu své dvouleté spolupráci s výzkumnou skupinou KNOT \cite{KNOT}, svému zájmu a
 svým zkušenostem v této problematice.
 
 \section{Úvod do problematiky}
@@ -42,13 +42,13 @@ je logicky členěno do bloků, ale je zde i mnoho reklam. HTML kód je často b
 zpracovat, ale jsou zde i skutečnosti, na které je potřeba si dát pozor.
 
 \section{Definice základních pojmů}
-Pro úplné porozumnění textu je potřeba znát spoustu odborných termínů. Většina termínů je vysvětlena
+Pro úplné porozumnění textu je potřeba znát mnoho odborných termínů. Většina termínů je vysvětlena
 v jednotlivých kapitolách, ale nachází se zde několik termínů, které je třeba vysvětlit předem.
 
 \subsection{Tokenizace}
 \label{Tokenizace}
 Tokenizace je proces, kde je sekvence znaků rozdělena na tzv. \textit{tokeny} (žetony). Tyto \textit{tokeny} jsou
-často označovány jako slova nebo výray. Jinýmy slovy, jedná se o proces, kde se užitečný text rozdělý na slova \cite{TOKENIZACE}.
+často označovány jako slova nebo výrazy. Jinýmy slovy, jedná se o proces, kde se užitečný text rozdělý na slova \cite{TOKENIZACE}.
 
 \subsection{Tagging}
 \label{Tagging}
@@ -61,44 +61,45 @@ Parsing je proces zpracování věty. Je to proces podobný větnému rozboru, k
 ve větě.
 
 \chapter{Zpracování webových korpusů ve světě}
-Korpusy obsahují obrovské množství dat a jsou cenými informačními zdroji. Se samotnými korpusy
+Korpusy obsahují obrovské množství dat a jsou cennými informačními zdroji. Se samotnými korpusy
 lze provádět spoustu činností. S dostatečně velkou databází lze lépe porozumět jazyku
-(zjistit jak se jazyk v průběhu let mění, jaká slova jsou nejčastěji používaná, atd.),
-provádět výzkumy (jaké jsou trendy ve společnosti, jak dokáže určitá událost ovlivnit svět okolo sebe, ...),
+(zjistit, jak se jazyk v průběhu let mění, jaká slova jsou nejčastěji používaná, atd.),
+provádět výzkumy (jaké jsou trendy ve společnosti, jak dokáže určitá událost ovlivnit svět okolo sebe apod.),
 tvořit vyhledávače a spoustu dalších věcí. Z toho plyne, že se tvoří spousta korpusů.
 
-Častým zdrojem dat pro tvorbu korpusů jsou webové stránky. Podle statistik
+Častým zdrojem dat pro tvorbu korpusů jsou webové stránky. Podle statistik se
 každý týden se zaregistruje přibližně 800 000 -- 1 100 000 nových domén \cite{NEWPAGES},
 což je obrovské množství dat, která jsou potenciálně vhodná pro tvorbu webového korpusu.
 
-V této kapitole popíšu některé ze zajímavých provedení tvorby a zpracování korpusových dat.
+V této kapitole bude pojednáno o některých zajímavých postupech tvorby korpusových dat
+a práce s nimi.
 
 \section{ClueWeb09 corpus}
 \label{ClueWeb09}
 Jedná se o poměrně rozsáhlý webový korpus určený pro podporu výzkumu vyhledávácích informací
 a vývoj technologií zabývající se zpracováním lidských jazyků. Tento korpus obsahuje zhruba
-jednu miliardu webových stránek jeho komprimovaná velikost je 5 TB (po dekompresi velikost
+jednu miliardu webových stránek, jeho komprimovaná velikost je 5 TB (po dekompresi velikost
 dosahuje až 25 TB). V korpusu je obsažen text v deseti různých jazycích.
 
 Jednotlivé webové stránky jsou ukládány v souborech ve fromátu WARC \ref{warc_format}.
 Každá z těchto kolekcí stránek obsahuje několik desítek tisíc stránek (většinou okolo 40 000 stránek) a komprimovaná
 nástrojem gzip.
 
-Informace obsažené v této kapitole byla získána z webových stránek projektu \cite{CLUEWEB}.
+Informace obsažené v této kapitole byly získány z webových stránek projektu \cite{CLUEWEB}.
 
 \section{ChatNoir}
 \textit{ChatNoir}, francouzky černá kočka, je novým vyhledávačem, který pracuje nad korpusovými daty. Korpus,
 který byl k tvorbě tohoto vyhledávače použit, je anglickou podmnožinou dat korpusu \textit{ClueWeb09 corpus}
 \ref{ClueWeb09} (anglická podmnožina obsahuje 500 milionů stránek s celkovou veliksotí 12 TB ) \cite{CHATNOIR}.
 
-Projekt \textit{ChatNoir} je psán převážně v jazyku Java a v procesu je mimojiné zapojeno získání textu z
+Projekt \textit{ChatNoir} je psán převážně v jazyku Java a v procesu je, kromě jiného, zapojeno získání textu z
 HTML stránek, detekcí jazyka a tvorba indexů pro vyhledávač \cite{CHATNOIR_GIT}.
 
 \section{Google Ngram corpus}
 Tento korpus obsahuje 500 miliard slov z 5,2 miliónu knih, které vyšly za posledních 500 let.
-Data byla získána z knih psaných v angličtině, francouštině, čínštině, ruštině
+Data byla získána z knih psaných v angličtině, francouštině, čínštině, ruštině,
 španělštině a němčině. Nad tímto korpusem byl posléze postaven nástroj, který
-je schopen měřit frekvenci používání různých slov v průběhu let \cite{NGRAM}
+je schopen měřit frekvenci používání různých slov v průběhu let \cite{NGRAM}.
 
 \chapter{Kolekce odkazů a stahování webových stránek} % idealne 5 stran
 Aby bylo možné zpracovat webové články, je nutné mít k dispozici alespoň minimum dat. Způsobů, pomocí kterých lze získávat pravidelně nové webové
@@ -310,7 +311,7 @@ a bylo zřejmé, že je potřeba najít efektivnější řešení.
 \subsection{Regulární výrazy}
 Jednoduchou a relativně efektivní cestou se ukázalo použití regulárních výrazů. Sice se zkomplikovala detekce reklam na stránkách,
 ale v době, kdy byly regulární výrazy zapojeny do procesu zpracování, bylo jasné, že se žádné rozpoznávání reklam
-a jejich odstranění z důvodu výkonosti provádět nebude.
+a jejich odstranění z důvodu výkonnosti provádět nebude.
 
 \subsection{MyHTML}
 Pro zajímavost je zde uveden ještě modul \textit{MyHTML} od Alexandera Borisova. Celý modul je psán v jazyce C,
@@ -350,18 +351,18 @@ Pozicí se zde rozumí slovo, XML tag, číslo, interpunkční znaménko nebo ji
 souboru používají XML značky, samotný vertikál neodpovídá definici XML souboru \cite{VERTIKAL}
 
 \section{Použité nástroje}
-Pro tvorbu vertikálu byly použity jak již existující nástroje, tak nově vyvinuté. V této kapitole
+Pro tvorbu vertikálu byly použity jak již existující nástroje, tak nástroje nově vyvinuté. V této kapitole
 budou podrobně popsány nástroje, které byly k vertikalizaci využity.
 
 \subsection{UDpipe}
-Prvním použitým nástrojem byl nástroj \textit{UDpipe}. \textit{UDpipe} je nástroj určený pro tokenizaci \ref{tokenizace},
-taggingu \ref{tagging} a parsing \ref{parsing}. \textit{UDpipe} je schopen zpracovat texty v různých jazycích \cite{UDPIPE}.
+Prvním použitým nástrojem byl nástroj \textit{UDpipe}. \textit{UDpipe} je nástroj určený pro tokenizaci \ref{Tokenizace},
+taggingu \ref{Tagging} a parsing \ref{Parsing}. \textit{UDpipe} je schopen zpracovat texty v různých jazycích \cite{UDPIPE}.
 
 Tento nástroj byl použit pro vytvoření prototypu. Prototyp byl schopný zpracovat české i slovenské texty, ale musel
 řešit některé problémy, které vznikly při použití tohoto nástroje.
 
 \subsubsection{Tagging}
-K tagingu \textit{UDpipe} používá nástroj \textit{MorphoDiTa} \ref{morphodita}.
+K taggingu \textit{UDpipe} používá nástroj \textit{MorphoDiTa} \ref{morphodita}.
 
 \subsubsection{Parsing}
 K parsingu je zde použit nástroj \textit{Parsito}. Jedná se o parser napsaný v jazyce C++ s vysokou přesností
@@ -370,19 +371,19 @@ a propustností až 30 000 slov za sekundu \cite{PARSITO}.
 \subsubsection{Vertikalizace}
 \textit{UDpipe} neprovádí žádnou vertikalizaci, ale samotný proces vertikalizace je při zpracování dalšími nástroji
 nezbytný. Stažené HTML stránky byly nejdříve zpracovány vertikalizátorem \ref{vertikalizator}, poté odstraněny
-značky a sestaven text. Výsledný text byl dán na zpracování nástrojem \textit{UDpipe} a poté do něj byly doplněny
+značky a sestaven text. Výsledný text byl zpracován nástrojem \textit{UDpipe} a poté do něho byly doplněny
 odstraněné značky vertikalizátoru. Doplnění probíhalo tak, že se z původních pozic jednotlivých značek ve vertikálním
-souboru vypočítaly nové pozice a posléze na tyto nové pozice byly zpětně vyjmuté značky doplněny. Naneštěstí tokenizace nástrojem \textit{UDpipe} rozdělovala text
-jiným způsobem, než vertikalizátor, to způsobilo, že zpětně vypočítaná pozice nebyla korektní. Proto nakonec musel být
+souboru vypočítaly nové pozice a posléze na tyto nové pozice byly zpětně vyjmuté značky doplněny. Bohužel tokenizace nástrojem \textit{UDpipe} rozdělovala text
+jiným způsobem než vertikalizátor, to způsobilo, že zpětně vypočítaná pozice nebyla korektní. Proto nakonec musel být
 proces tokenizace úplně nahrazen vertikalizátorem.
 
 \subsection{MorphoDiTa}
 \textit{MorphoDiTa} je nástrojem určeným k morfologicé analýze textu. Jejím hlavním účelem v tomto projektu je
-provedení taggingu \ref{tagging}, ale je zde použita i k tokenizaci \ref{tokenizace}.
+provedení taggingu \ref{Tagging}, ale je zde použita i k tokenizaci \ref{Tokenizace}.
 Aby bylo možné text převést do vertikální podoby, je potřeba nejprve jednotlivé bloky
 textu rozdělit do vět a věty rozdělit na jednotlivá slova. Právě k tomuto účelu
 je zde použit tokenizer, který poskytuje nástroj \textit{MorphoDiTa}.
-Podrobnější popis nástroje je v kapitole \textit{Tagging} \ref{MorphoDiTa} \cite{MORPHODITA}.
+Podrobnější popis nástroje je v kapitole \textit{Tagging} \ref{morphodita} \cite{MORPHODITA}.
 
 \subsection{Regulární výrazy}
 Pro vytvoření triviálního vertikalizátoru stačí i regulární výrazy. Při použití regulárních
@@ -414,22 +415,22 @@ byl nástroj \textit{Pexpect} nahrazen nástrojem \textit{subprocess}.
 
 \subsection{Langdetect}
 \label{langdetect}
-\textit{langdetect} je jednou z řady knihoven jazyka Python určených pro detekci jazyka.
+\textit{Langdetect} je jednou z řady knihoven jazyka Python určených pro detekci jazyka.
 Jedná se o import knihovny \textit{langue-detection}, která byla vyvýjená společností Google
 pro jazyk Java \cite{LANGDETECT}. Tato knihovna je v projektu použita pro detekci jazyka,
 protože má poměrně dobré výsledky i na krátkých textových úsecích.
 
 \section{Paralelní zpracování}
 \label{paralel_tokenizer}
-Protože doba zpracování rozsáhlých webových kolekcí je poměrně dlouhá, je lepší rozložit
+Protože doba zpracování rozsáhlých webových kolekcí je poměrně dlouhá, je výhodnější rozložit
 činnost mezi více procesů a tak zkrátit celkovou dobu zpracování.
 
 Paralelní zpracování v tomto projektu funguje tak, že rodičovský proces zpracovává HTML
 stránky a jeho potomci provádějí tokenizaci, vertikalizaci a deteci jazyka.
-Činnost potomků je časově náročnější, z toho důvodu si na pomoc tvoří ještě proces,
+Činnost potomků je časově náročnější, proto si potomci na pomoc tvoří ještě proces,
 který provádí detekci jazyka, zatímco oni provádějí vertikalizaci.
 Potomků může být více nebo pouze jeden. Zajímavé je, že na každém ze strojů, na kterých
-probíhalo testování, je potřeba jiný počet potomků, aby stačilo zpracovávat stránky, které
+probíhalo testování, je potřeba jiný počet potomků, aby stačili zpracovávat stránky, které
 generuje rodičovský proces.
 
 \subsection{Rizika a problémy u paralelního zpracování}
@@ -447,7 +448,7 @@ procesů nemusí proces provádějící tokenizaci zjistit, že nějaká data ke
 a čeká, než nějaká data dostane.
 
 \subsubsection{Stárnutí}
-Stárnutí nebo také hladovění, je situace, kdy proces čeká na podmínku, která nemusí nastat \cite{SYNCPROCES}.
+Stárnutí nebo také hladovění je situace, kdy proces čeká na podmínku, která nemusí nastat \cite{SYNCPROCES}.
 
 V případě tohoto projektu se jedná například o situaci, kdy rodičovský proces čeká na dokončení práce svého
 potomka, ale potomek již svou činnost dokončil nebo při zpracování dat potomkem nastala chyba a proces potomka
@@ -471,7 +472,7 @@ poskytuje řadu možností, jak zajistit výlučný přístup.
 Prvním a nejjednoduším ze způsobů jsou zámky. Zjednodušene řečeno, zámek je objekt, který má 2 stavy.
 Jeden ze stavů indikuje to, že se v kritické sekci, tj. části kódu, kde se pracuje se sdílenou pamětí,
 již jeden proces nachází. Druhý ze stavů identifikuje pravý opak -- kritická sekce je volná. Aby zámek
-fungoval tak, jak má, je potřeba, aby každý z procesů při přístupu do kritické sekce zkontroloval stav
+fungoval spráně je potřeba, aby každý z procesů při přístupu do kritické sekce zkontroloval stav
 zámku a pokud sekce volná není, vyjmul se z fronty aktivních procesů a zařadil se do fronty čekajících
 procesů na vstup do dané kritické sekce.
 
@@ -603,6 +604,17 @@ proto se volý výše zmíněný postup.
 Při zpracování českých a slovenských článků nešlo se spuštěnou detekcí jazyka docílit požadovaným výsledkům -- výstup
 byl prázdný, opět bez jakékoliv chybové hlášky nebo informace
 
+\section{Deduplikace}
+Deduplikace dat je prováděna až po zpracování celého procesu vertikalizace a je vykonána nástrojem,
+který byl vyvíjen v rámci projektu \href{https://knot.fit.vutbr.cz/wiki/index.php/Corpproc_dedup}{Corpproc\_dedup}
+výzkumné skupiny KNOT.
+Tento nástroj se skládá ze serveru a klienta. Úlohou klienta je zpracovávát vertikální soubor a dotazovat
+se serveru, zda má odstavec, popřípadě celý dokument, označit jako duplicitní. Úlohou serveru je
+řešit dotazy klienta a spravovat databázi.
+
+Informace zahrnuté v tomto odstavci byly získány ze stránek projektu \cite{DEDUPLIKACE}.
+
+
 \section{Nový systém}
 Nový systém je reprezentován třídou \textit{Page\_tokenizer}. Tato třídá využívá již vytvořených tříd
 \textit{Page\_reader} a \textit{Page}. Třídu \textit{Page\_reader} využívá ke generování HTML stránek
@@ -638,21 +650,21 @@ Novým atribudem je zde atribut \textit{lang}. Tento atribud může být (není 
 
 \chapter{Tagging}
 \label{morphodita}
-Posledním procesem této práca je tagging \ref{Tagging}. Jedná se jak o časově, tak i implementačně
+Posledním procesem této práca je tagging \ref{Tagging}. Jedná se o časově a implementačně
 nejnáročnější proces.
 
 \section{Použité nástroje}
 Protože všechny nástroje zde použité již byly popsány v předchozích kapitolách, je zde podrobněji
-rozveden pouze program \subsection{MorphoDiTa}.
+rozveden pouze program \textit{MorphoDiTa}.
 
-\section{Gzip}
-Nástroj \textit{gzip} \ref{gzip} je zde použit pouze kvůli možnosti čtení dat z archivů.
+\subsection{Gzip}
+Nástroj \textit{gzip} \ref{gzip} je zde použit pouze z důvodu možnosti čtení dat z archivů.
 
-\section{Lzma}
-\textit{Lzma} \ref{lzma} je zde použita k dekompresi dat ze zdrojových archivů a ke kompresy výstupních dat.
+\subsection{Lzma}
+\textit{Lzma} \ref{lzma} je zde použita k dekompresi dat ze zdrojových archivů a ke kompresi výstupních dat.
 
-\section{Subprocess}
-Modul \textit{subprocess} \ref{subprocess} je zde pužit téměř totožným způsobem jako je popsáno v kapitole zabývající
+\subsection{Subprocess}
+Modul \textit{subprocess} \ref{subprocess} je zde použit téměř totožným způsobem jako je popsáno v kapitole zabývající
 se převodem textu do vertikálního formátu \ref{vertikalizace}.
 
 \subsection{MorphoDiTa}
@@ -661,9 +673,9 @@ Stěžejním nástrojem této části je nástroj \textit{MorphoDiTa}, tento ná
 několik činností -- tokenizace \ref{Tokenizace}, tagging \ref{Tagging}, morfologická analýza a morfologická tvorba. V tomto projektu
 byl nástroj již použit k tokenizaci. Zde je použit pro provádění taggingu.
 
-\textit{MorphoDiTa} je psaná v jazyce C\texttt{++}, ale jsou existují i jeji verze v jazyce C\texttt{\#}, Java,
-Python a Perl. V tomto projektu byla použita verze psaná v jazyce C\texttt{++}, nejen kvůli doporučení od autorů, ale
-i kvůli rychlosti.
+\textit{MorphoDiTa} je psaná v jazyce C\texttt{++}, ale existují i jeji verze v jazyce C\texttt{\#}, Java,
+Python a Perl. V tomto projektu byla použita verze psaná v jazyce C\texttt{++}, nejen z důvodu doporučení od autorů, ale
+i z důvodu rychlosti.
 
 Pro provedení taggingu je potřeba mít k dispozici jazykový model pro ten jazyk, ve kterém je psán text. Tento jazykový model obsahuje
 dlouhý seznam slov s pravděpodobností jejich výskytu v textu \cite{LANGMODEL}.
@@ -671,12 +683,12 @@ dlouhý seznam slov s pravděpodobností jejich výskytu v textu \cite{LANGMODEL
 Protože je na vstupu tohoto procesu soubor ve formátu vertikálu, je potřeba nejdříve veškeré vložené značky dočasně odstranit a teprve
 až po jejich odstranení je text předán na zpracování. Zpracovaný text je následně doplněn o původní značky.
 
-\subsubsection{Úprava zdrojových kódu nástroje MorphoDiTa}
-Jedním z možných způsobů, jak zefektivnit proces taggingu a tokenizace je upravit zdrojový kód
+\subsubsection{Úprava zdrojových kódů nástroje MorphoDiTa}
+Jedním z možných způsobů, jak zefektivnit proces taggingu a tokenizace, je upravit zdrojový kód
 nástroje \textit{MorphoDiTa}. Pokud by se podařilo nástroj přinutit ignorovat značky vertikalizátoru,
-odpadl mohl by se do nástroje vložit samotný vertikální soubor a nemuseli se tagy složitě dekódovat,
+mohl by se do nástroje vložit samotný vertikální soubor a nebylo by nutné tagy složitě dekódovat,
 odebírat a poté vracet zpět na své místo. Nicméně samotní autoři nástroje \textit{MorphoDiTa} slíbili,
-že se tímto problémem budou zabívat a je to jedna z věcí, které plánují v tomto nástroji
+že se tímto problémem budou zabývat a je to jedna z věcí, které plánují v tomto nástroji
 implementovat.
 
 \section{Paralelní zpracování}
@@ -685,9 +697,9 @@ paralelního zpracování \ref{paralel_hazards}), jako u převodu textu do verti
 
 Hlavní rozdíl je při samotném spuštění nástroje \textit{MorphoDiTa}. Protože, jak již bylo zmíněno dříve, je zde potřeba
 jazykového modelu, musí se tento model také před samotným zpracováním načíst do paměti nástoje \textit{MorphoDiTa}.
-Zpracování jazykového modelu klade na procesor zátěž a z časového hlediska je zpracování dlouhé 1 -- 5 sekund, v závislosti
+Zpracování jazykového modelu klade na procesor zátěž a z časového hlediska je zpracování dlouhé 1 -- 5 sekund v závislosti
 na aktuální procesorové zátěži stroje a na samotném stroji, kde je proces spouštěn. Tento časový úsek
-byl zjištěn pomocí měření prováděného na serverech \textit{athena} a \textit{knot}. Právě kvůli nutnosti
+byl zjištěn pomocí měření prováděného na serverech \textit{athena} a \textit{knot}. Právě z důvodu nutnosti
 zpracování jazykového modelu při každém spuštění aplikace je ideální zařídit, aby aplikace
 byla spuštěna co nejméněkrát, ideálně jednou -- tehdy ale narůstá velikost potřebné paměti. Relativně dlouhou dobu zpracování
 lze řešit spuštěním nástroje na více procesech, ale za cenu zvýšeného množství použité paměti.
@@ -695,9 +707,15 @@ lze řešit spuštěním nástroje na více procesech, ale za cenu zvýšeného 
 Pro maximální využití výkonu stroje je zde i možnost spouštět několik procesů provádějící tagging zároveň.
 Rodič zde načítá vertikální soubor do paměti a při načtení určitého počtu záznamů (tento počet lze změnit i během procesu zpracování) předá načtená data
 do fronty, ze které si je vyjmou potomci. Potomek poté spustí tagger a zatímco tagger zpracovává jazykový model,
-potomek zbavý text značek, které vytvořil vertikalizátor a tokenizovaný text předají taggeru. Potomek počká
-na provedení taggingu, vrátí odebrané značky zpět do textu a výsledek uloží do fronty, ze které si to následně
-přečte rodičovský proces.
+potomek zbaví text značek, které vytvořil vertikalizátor a tokenizovaný text předá taggeru. Potomek počká
+na provedení taggingu, vrátí odebrané značky zpět do textu a výsledek uloží do fronty, kterou zpracuje rodičovský proces.
+
+\section{Vícejazyčnost}
+Protože pro každý z jazyků je nutné použít jiný jazykový model, je potřeba tento problém zde řešit.
+Každá stránka je během převodu do vertikálního formátu rozdělena do částí. Každá z těchto částí
+může mít definovaný jazyk a na základě tohoto jazyka je stránka rozdělena. Každá z
+těchto částí je pak zpracována pomocí jiného modelu a následně se stránka poskládá
+zpět.
 
 \section{Srovnání s aktuálním systémem}
 Původní systém je zaměřený na zpracování anglických textů, ale tato práce je zaměřena
@@ -717,16 +735,16 @@ nemusí nutně použít. V této kapitole bude popsána i tvorba těchto obsluž
 
 \section{Instalace knihoven jazyka Python}
 Pro instalaci knihoven jazyka Python se doporučuje použití konfiguračního skriptu. Pokud
-ale není použití tohoto skriptu chtěné k instalaci knihoven je možné provést pomocí nástroje
-\textit{pip3}. Tato práce je implementovaná a určená pro linuxová zařízení.
+ale není použití tohoto skriptu vyžadováno k instalaci knihoven, je možné instalaci provést pomocí nástroje
+\textit{pip3}. Tato práce je implementována a určena pro linuxová zařízení.
 
-\paragraph{Programy, které je potřeba nainstalovat:}
+\paragraph{Programy, které je nutno nainstalovat:}
 \begin{itemize}
     \item python3
     \item GNU WGET
 \end{itemize}
 
-\paragraph{Knihovny jazyka Python, které je potřeba nainstalovat:}
+\paragraph{Knihovny jazyka Python, které je nutno nainstalovat:}
 \begin{itemize}
     \item warc
     \item warc3
@@ -734,7 +752,7 @@ ale není použití tohoto skriptu chtěné k instalaci knihoven je možné prov
 \end{itemize}
 
 \section{Instalace nástroje MorphoDiTa}
-Nástroj \textit{MorphoDiTa} lze stáhtou z stáhnout pomocí nástroje \textit{git} nebo
+Nástroj \textit{MorphoDiTa} lze stáhnout pomocí nástroje \textit{git} nebo
 ze stránek \href{https://github.com/ufal/morphodita}{GitHubu} a to ve dvou podobách.
 
 První z možností je stáhnout zdrojové kódy nástroje a ty na samotném stroji přeložit.
@@ -744,6 +762,7 @@ Ke spuštění taggingu je také potřeba mít jazykový model. Jazykový model 
 ze stránek repozitáře \href{https://lindat.mff.cuni.cz/repository/xmlui/}{LINDAT/CLARIN}.
 Momentálně jsou k dispozici 2 jazykové modely -- \href{https://lindat.mff.cuni.cz/repository/xmlui/handle/11234/1-1836}{Český}
 a \href{https://lindat.mff.cuni.cz/repository/xmlui/}{Anglický}. Jazykový model pro slovenštinu
+není poskytnut volně ke stažení.
 
 Při instalaci nástroje pomocí konfiguračního skriptu budou staženy již přeložené binární
 soubory.
@@ -753,48 +772,70 @@ soubory.
 \subsection{RSS zdroje}
 Pro kolekci webových stránek je potřebné mít seznam RSS a ATOM zdrojů. V tomto projektu
 jsou připojeny seznamy RSS pro stahování českých a slovenských zpravodajských deníků, stahování blogů,
-stahování komentářů ke článkům, anglických zpravodajských deníků a ostatních stránek které využívají
+stahování komentářů ke článkům, anglických zpravodajských deníků a ostatních stránek, které využívají
 technologií ATOM nebo RSS. Tyto zdroje se nacházejí ve složce \textit{rss\_sources}.
 
-Stahování čekých a slovenských deníků je uloženo v soubory \textit{cs\_media.txt}. V tomto souboru
-se také nachází zdroje pro stahování komentářů k těmto článků.
+Stahování čekých a slovenských deníků je uloženo v souboru \textit{cs\_media.txt}. V tomto souboru
+se také nacházejí zdroje pro stahování komentářů k těmto článkům.
 
 Anglické zpravodajské deníky jsou uloženy v souboru \textit{newsbrief\_eu}.
 
 Blogy a komentáře k nim jsou uloženy v souboru \textit{blogs.txt}.
 
-A ostatní RSS a ATOM zdroje které byly nalezeny jsou uloženy v souboru \textit{others.txt}.
+A ostatní RSS a ATOM zdroje, které byly nalezeny, jsou uloženy v souboru \textit{others.txt}.
 
 \subsection{Automatické vyhledávání nových zdrojů}
-TODO
+Pro získání nových dat je vhodné vyhledávat i jejich nové zdroje. Nové zdroje se vyhledávájí
+těsně před převodem HTML stránky do vertikální podoby. Takto nalezené zdroje se ukládájí do souboru \textit{others.txt}
+ve složce \textit{rss\_sources}.
+Dalším způsobem, jak hledat nové zdroje je portál \href{http://blog.cz/}{blog.cz}, který má žebříčky
+nejlépe hodnocených, nejnovějších a nejnavštěvovanějších blogů. Z těchto žebříčků se extrahují odkazy
+na dané blogy. Z těchto odkazů pak lze jednoduše sestavit platné RSS zdroje. Takto nalezené blogy
+se ukládají do souboru souboru \textit{blogs.txt} ve složce \textit{rss\_sources}.
 
 \subsection{Manuální vložení nových zdrojů}
-Pokud je třeba manuálně vložit nové zdroje, je možné je přidat do již existujících
-RSS zdrojů nebo vytvořit nový soubor a uložit je do něj. Soubor by měl mít vždy koncovku
-\textit{.txt}. Tento nový soubor bude načten a zařazen do zpracování při dalším cyklu kolekce dat.
+Pokud je potřeba manuálně vložit nové zdroje, je možné je přidat do již existujících
+RSS zdrojů nebo vytvořit nový soubor a zdroje uložit do něho. Soubor by měl mít vždy koncovku
+\textit{.txt}. Tento nový soubor bude načten a zařazen do zpracování během dalšího cyklu kolekce dat.
 
 \subsection{Soubory s odkazy určenými ke stažení}
 Ke kolekci odkazů z RSS zdrojů a jejich deduplikaci je určena složka \textit{collected\_links}.
-Pro každý zdrojový soubor ve seložce \textit{rss\_sources} je zde vytvořena stejnojmená složka (bez koncovky \textit{.txt}).
+Pro každý zdrojový soubor ve složce \textit{rss\_sources} je zde vytvořena stejnojmenná složka (bez koncovky \textit{.txt}).
 Do těchto složek se ukládají nalezené okdazy na nové články. Soubory s koncovkou \textit{.downloaded}
 jsou soubory, u kterých již bylo provedeno stažení a soubory končící koncovkou \textit{.collected}
-jsou ty souboty, které ještě nebyly zpracované nástrojem pro stahování.
+jsou ty soubory, které ještě nebyly zpracované nástrojem pro stahování.
 
 \subsubsection{Manuální vložení nových odkazů ke stažení}
-Pokud je potřeba do procesu manuálně vložit nové odkazy, rozhodně není dobrým nápadem
+Pokud je potřeba do procesu manuálně vložit nové odkazy, rozhodně není vhodné
 je vkládat do již existujících souborů. Tyto soubory mohou být právě některým z programů
 zpracovávány. Nové odkazy ke stažení je nutné vložit do nového souboru
 umístěného v patřičné složce. Tyto soubory budou zpracovány během dalšího cyklu stahování
 odkazů.
 
+\subsection{Stahování dat}
+Stahování dat je prováděno pravidělně v intervalech. Tento interval je momentálně
+nastaven na 24 hodin. Stažené soubory se ukládají do složky \textit{downloaded}.
+Podobně, jako u kolekce odkazů, je i zde pro každý zdrojový soubor ve složce \textit{rss\_sources}
+vytvořena stejnojmenná složka. Stažené soubory mají koncovku \textit{.warc}. Jakmile
+soubor bude zpracován nástrojem pro vertikalizaci, bude soubor komprimován a získá
+koncovku \textit{.warc.xz}.
+
 \subsection{Vertikalizace}
-TODO
+Vertikalizace se provádí okamžitě po stažení nových stránek. Vertikální soubory se ukládají
+do složky \textit{vert}. Stejně jako v předchozích případech, i zde je
+pro každý zdrojový soubor ve složce \textit{rss\_sources} vytvořena stejnojmenná složka.
+Vertikální soubory mají koncovku \textit{.vert}. Pokud má soubor koncovku \textit{.vert.xz},
+byl již soubor zpracován taggingem.
 
 \subsection{Tagging}
-TODO
+Tagging se provádí hned po skončení vertikalizace. Výstupní soubory se ukládají do složky
+\textit{tagged}. Opět je zde pro každý zdrojový soubor ve složce \textit{rss\_sources} vytvořena
+stejnojmenná složka. Samotné soubory mají koncovku \textit{.tagged.xz}. V momentě, kdy bude do
+projektu zapojen i parsing, budou mít soubory koncovku \textit{.tagged} a koncovku \textit{.tagged.xz}
+dostanou až v momentě, kdy bude proveden parsing.
 
 \section{Manuální zpracování}
-Pokud není automatické zpracování vhodné nebo potřebné, zle data zpracovat i manuálně.
+Pokud není automatické zpracování vhodné nebo potřebné, lze data zpracovat i manuálně.
 
 \subsection{Kolekce odkazů}
 Kolekci odkazů lze provést pomocí připraveného skriptu \textit{link\_collector.py}.
@@ -803,44 +844,45 @@ parametry jsou volitelné.
 
 \paragraph{Argumenty programu: }
 \begin{itemize}
-    \item \textit{$-$i, $--$input} Cesta k souboru nebo souborům, které obsahují adresy na RSS nebo ATOM zdroje. Výchozí hodnotou je standartní vstup.
-    \item \textit{$-$o, $--$output} Výstupní soubor s okazy ke stažení. Výchozí hodnotou je standrtní výstup
+    \item \textit{$-$i, $--$input} Cesta k souboru nebo souborům, které obsahují adresy na RSS nebo ATOM zdroje. Výchozí hodnotou je standardní vstup.
+    \item \textit{$-$o, $--$output} Výstupní soubor s okazy ke stažení. Výchozí hodnotou je standardní výstup
     \item \textit{$-$e, $--$errors} Logovací soubor, kde budou ukládány varování a chyby během zpracování. Výchozí hodnotou je chybový výstup.
     \item \textit{$-$a, $--$append} Výstupní soubor nebude při otevření smazán, ale nové odkazy se zapíší na jeho konec.
     \item \textit{$-$h, $--$help} Zobrazí nápovědu k programu.
     \item \textit{$-$w, $--$wait} Tento argument určuje maximální délku čekání na odpověď serveru. Výchozí hodnota je 1 sekunda.
-    \item \textit{$-$t, $--$test} Namísto, aby proběhla kolekce odkazů, budou zdrojové odkazy ověřeny, zda opravdu vedou na RSS nebo ATOM zdroje.
+    \item \textit{$-$t, $--$test} Místo toho, aby proběhla kolekce odkazů, budou zdrojové odkazy ověřeny, zda opravdu vedou na RSS nebo ATOM zdroje.
     \item \textit{$-$m, $--$multiprocessing} Tento parametr udává, kolik dalších procesů bude provádět kolekci odkazů. Výchozí hodnotou je 0 -- kolekce probíhá sekvenčně.
 \end{itemize}
 
 \subsection{Stahování stránek}
 Ke stahování webových stránek je určen skript \textit{page\_downloader.py}. Program má
-pouze jeden povinný argument -- výstupní soubor. Pokud bude vstupní soubor mít koncovku
+pouze jeden povinný argument -- výstupní soubor. Pokud bude výstupní soubor mít koncovku
 \textit{.xz}, bude použit algoritmus \textit{lzma} \ref{lzma} ke kompresi dat.
 
 \paragraph{Argumenty programu: }
 \begin{itemize}
-    \item \textit{$-$i, $--$input} Cesta k souboru nebo souborům, které obsahují adresy stránek ke stažení. Výchozí hodnotou je standartní vstup.
+    \item \textit{$-$i, $--$input} Cesta k souboru nebo souborům, které obsahují adresy stránek ke stažení. Výchozí hodnotou je standardní vstup.
     \item \textit{$-$o, $--$output} Výstupní soubor, kam budou uloženy stažené stránky. Soubor by měl vždy mít koncovku .warc nebo .warc.xz.
-    \item \textit{$-$e, $--$errors} Logovací soubor, kde budou ukládány varování a chyby během zpracování. Výchozí hodnotou je chybový výstup.
+    \item \textit{$-$e, $--$errors} Logovací soubor, kde budou ukládány chyby a varování, které nastaly během zpracování. Výchozí hodnotou je standardní chybový výstup.
     \item \textit{$-$h, $--$help} Zobrazí nápovědu k programu.
     \item \textit{$-$w, $--$wait} Tento argument určuje maximální délku čekání na odpověď serveru. Výchozí hodnota je 1 sekunda.
-    \item \textit{$-$p, $--$pause} Tento argument určuje minimální délku čekání na mezi dotazy na jednu doménu. Výchozí hodnota je 1 sekunda.
+    \item \textit{$-$p, $--$pause} Tento argument určuje minimální časovou mezeru mezi dvěma dotazy na jednu doménu. Výchozí hodnota je 1 sekunda.
     \item \textit{$-$m, $--$multiprocessing} Tento parametr udává, kolik dalších procesů bude provádět kolekci odkazů. Výchozí hodnotou je 0 -- kolekce probíhá sekvenčně.
 \end{itemize}
 
 \subsection{Převod textu do vertikálního formátu}
-Pro tento účel je vytvořek skript \textit{html\_to\_vert.py}. Ke spuštění tohoto programu je nutné mít
+Pro tento účel je vytvořen skript \textit{html\_to\_vert.py}. Ke spuštění tohoto programu je nutné mít
 k dispozici binární soubor tokenizeru. Tento binární soubor se jmenuje \textit{run\_tokenizer} a je
 součástí nástroje \textit{MorphoDiTa}.
 
 \paragraph{Argumenty programu: }
 \begin{itemize}
-    \item \textit{$-$i, $--$input} Cesta k archivům s webovými stránkami. Soubory musí být ve fromátu WARC a mohou být komptimovány nástroji gzip a xz.
+    \item \textit{$-$i, $--$input} Cesta k archivům s webovými stránkami. Soubory musí být ve fromátu WARC a mohou být komprimovány nástroji gzip a xz.
     \item \textit{$-$o, $--$output} Výstupní soubor, kde budou uloženy zpracované stránky. Soubor by měl vždy mít koncovku .vert nebo .vert.xz.
     \item \textit{$-$h, $--$help} Zobrazí nápovědu k programu.
     \item \textit{$-$t, $--$tokenizer} Cesta k binárnímu souboru tokenizeru.
-    \item \textit{$-$f, $--$format\_new} Budou značeny nadpisi i obrázky.
+    \item \textit{$-$f, $--$format\_new} Budou značeny nadpisy i obrázky.
+    \item \textit{$-$l, $--$langdetect} Bude prováděna detekce jazyka. Tento parametr lze kombinovat poze s parametrem \textit{$--$format\_new}.
     \item \textit{$-$m, $--$multiprocessing} Tento parametr udává, kolik dalších procesů bude provádět tokenizaci. Výchozí hodnotou je 10.
 \end{itemize}
 
@@ -851,11 +893,11 @@ a je součástí nástroje \textit{MorphoDiTa}.
 
 \paragraph{Argumenty programu: }
 \begin{itemize}
-    \item \textit{$-$i, $--$input} Cesta k archivům s webovými stránkami. Soubory musí být ve fromátu WARC a mohou být komptimovány nástroji gzip a xz.
+    \item \textit{$-$i, $--$input} Cesta k vertikálním souborům. Soubory mohou být komprimovány nástroji gzip a xz.
     \item \textit{$-$o, $--$output} Výstupní soubor, kde budou uloženy zpracované stránky. Soubor by měl vždy mít koncovku .vert nebo .vert.xz.
     \item \textit{$-$h, $--$help} Zobrazí nápovědu k programu.
     \item \textit{$-$t, $--$tagger} Cesta k binárnímu souboru tokenizeru.
-    \item \textit{$-$l, $--$languagemodel} Cesta k jazykovému modelu.
+    \item \textit{$-$l, $--$languages} Podporované jazyky a cesty k jejich modelům.
     \item \textit{$-$m, $--$multiprocessing} Tento parametr udává, kolik dalších procesů bude provádět kolekci odkazů. Výchozí hodnotou je 10.
 \end{itemize}
 
@@ -865,7 +907,7 @@ přepracování všech zdrojových kódů, byl projekt rozdělen na dílčí č�
 dílčích částí řeší různé problémy zpracování.
 
 \subsection{Kolekce a stahování odkazů}
-Pokud je třeba změnit nástroje pro kolekci a stahování je potřeba tyto nové nástroje
+Pokud je třeba změnit nástroje pro kolekci a stahování, je potřeba tyto nové nástroje
 umístit do modulu \textit{Page\_downloader.py}. V tomtu modulu se nachází implementace
 metody \textit{get\_page\_from\_url}, která se stará o stažení jedné stránky. V tomto
 modulu je dále implementováno víceprocesorové stahování a logování.
@@ -873,14 +915,14 @@ modulu je dále implementováno víceprocesorové stahování a logování.
 \subsubsection{Zpracování RSS a ATOM souboru}
 Modul, který řeší extrakci odkazů z RSS a ATOM souborů se nazývá \textit{Link\_collector.py}.
 V tomto modulu se nachází implementace metod pro práci s RSS a ATOM soubory. Pokud bude
-třeba změnit způsob, jak se vyhledávají zdrojové odkazy v těchto souborech, implementace vyhledávání
-se na chází v metodě \textit{find\_links}. Pokud bude potřeba upravit hledání odkazů
+potřeba změnit způsob vyhledávání zdrojových odkazů v těchto souborech, implementace vyhledávání
+se nachází v metodě \textit{find\_links}. V případě potřeby uprávy hledání odkazů
 na RSS a ATOM zdroje uvnitř HTML stránky, je zapotřebí upravit metodu \textit{find\_rss\_from\_page}.
 
 \subsubsection{Stáhování webových stránek}
 Pro stahování stránek byl vytvořen modul \textit{Page\_generator.py}. Protože veškeré
 stahování je řešeno již v modulu \textit{Page\_downloader.py}, bylo zde potřeba pouze implementovat
-iterátor, který zajišťuje určitou časovou mezeru mezi dvěmi dotazy na jeden server.
+iterátor, který zajišťuje určitou časovou mezeru mezi dvěma dotazy na jeden server.
 
 \subsection{Převod textu do vertikální podoby}
 V této části je poměrně pravděpodobné, že dojde k výměně některých nástrojů.
@@ -889,54 +931,53 @@ pravidel, které jsou popsané níže.
 
 \subsubsection{Extrakce textu a důležitých entit z HTML souboru}
 K extrakci textu a některých HTML entit z webové stránky slouží modul \textit{Page.py}.
-Pokud je potřeba změnit způsob extrakce textu z HTML stránek, je potřeba změnit
+Pokud je potřeba změnit způsob extrakce textu z HTML stránek, je nutné změnit
 metodu \textit{get\_text} a odstranit nebo změnit metody k ní přidružené.
 
 \subsubsection{Převod textu do vertikálního formátu a rozpoznávání jazyka}
 V souboru \textit{Page\_tokenizer.py} se nachází implementace třídy \textit{Page\_tokenizer}.
-Tato třída má definovanou metodu \textit{\_tokenizer}, ve které je zdrojový kód který
-je použit k implementaci činnosti potomků. Mimo jiné se zde i nachází spuštění tokenizeru,
-který poskytuje nástroj \textit{MorphoDiTa}. Pokud je potřeba změnit použitý nástroj,
+Tato třída má definovanou metodu \textit{\_tokenizer}, ve které je zdrojový kód, který
+je použit k implementaci činnosti potomků. Kromě jiného se zde nachází spuštění tokenizeru,
+který poskytuje nástroj \textit{MorphoDiTa}. Pokud je nutné změnit použitý nástroj,
 musí se zde nastavit paramentry pro nový nástroj. Je možné, že bude potřeba změnit i formátování
 vstupních a výstupních dat nového nástroje. Formátování těchto dat je také implemetováno v této
 metodě.
 
 Při změne nástroje určeného k rozpoznávání jazyka je nutné změnit metodu \textit{\_translator}.
-Narozdíl od metody \textit{\_tokenizer} je tato metoda statická.
+Na rozdíl od metody \textit{\_tokenizer} je tato metoda statická.
 
 \subsection{Tagging}
-Tagging je implementován v modulu \textit{Page\_tagger.py}. Podobně, jako v modulu
-\textit{Page\_tokenizer.py}, je i zde proces taggingu reprezentován jedinou metodou.
+Tagging je implementován v modulu \textit{Page\_tagger.py}. Podobně jako v modulu
+\textit{Page\_tokenizer.py} je i zde proces taggingu reprezentován jedinou metodou.
 Tato metoda nese název \textit{\_tagger\_tokenized} a nachází se v ní formátování
 vstupních a výstupních dat pro tagger, který poskytuje nástroj \textit{MorphoDiTa}.
 Samotný tagger je zde i spouštěn.
 
 \section{Tvorba obslužných skriptů}
 Protože každá z vytvořených tříd má předem daný účel a řeší malou část celkového problému,
-je tvorba skriptu, který s touto třídou schopen pracovat, poměrně jednoduchá. Účel obslužného skriptu
-je použít danou třídu takovým způsobem, aby vyřešila problém, ke kterému byla vytvořena. Je ale
+je tvorba skriptu, který umožňuje s touto třídou efektivně schopen pracovat, poměrně jednoduchá. Účelem obslužného skriptu
+je použít danou třídu takovým způsobem, aby vyřešila problém, ke kterému byla vytvořena. Je však
 potřeba dbát na jednoduchost a víceúčelovost skriptu, aby vytvořený skript byl použitelný. Objekty
-těchto tříd lze vytvořit s různými parametry a tyto pramatery výrazně ovlivňují dobu zpracování,
+těchto tříd lze vytvořit s různými parametry. Tyto pramatery výrazně ovlivňují dobu zpracování,
 zátěž na procesor a paměťovou náročnost. Protože se předem neví, na jakém stroji bude skript spuštěn,
 měla by existovat možnost, jak ovlivnit celkovou náročnost programu. K tomuto účelu často slouží
 parametry programu.
 
 Velkým problémem často bývá kopírování kódů mezi skripty nebo lenost programátora zpracovávat
 velké množství argumentů. To způsobuje, že vznikají skripty, kde záleží na pořadí parametrů
-a tím se zvyšuje náročnost použití programu s každým parametrem, které ten program je schopen
-použít. Kopírování kódu zase zůsobuje to, že vypsaná nápověda k programu bývá zcestná, pokud
-ji autor nového skriptu neupraví, nebo se zkopírují i komentáře, popřípadě i chyby.
+a tím se zvyšuje náročnost použití programu s každým přidaným parametrem.
+Kopírování kódu zase zůsobuje, že spolu s možným řešením se kopírují i chyby.
 
-Další důležitou částí je jednodný způsob logování chyb. Pokud každý ze skriptů bude dodržovat
+Další důležitou částí je jednotný způsob logování chyb. Pokud každý ze skriptů bude dodržovat
 jistý způsob logování a zároveň použije vhodný formát, lze tyto chyby procházet i automatickými
 skripty a vyhodnotit, kterým chybám je třeba věnovat pozornost.
 
-V neposlední řádě je třeba zmínit i fakt, že když bude existovat desítky různých obslužných skriptů
+V neposlední řádě je třeba zmínit i fakt, že když budou existovat desítky různých obslužných skriptů
 a každý se bude používat jiným způsobem, bude to pro jejich uživatele přinejmenším matoucí.
 
 \subsection{Funkce zjednodušující tvorbu skriptů}
-Pro řešení víše popsaných problému bylo vytvořeno několik funkcí, které několikanásobně (v mém případě)
-zefektivnili tvorbu skriptů a to nejen pro práci s těmito moduly. Tyto funkce jsou umístěny v modulu
+Pro řešení výše popsaných problémů bylo vytvořeno několik funkcí, které několikanásobně (v mém případě)
+zefektivnily tvorbu skriptů a to nejen pro práci s těmito moduly. Tyto funkce jsou umístěny v modulu
 \textit{Functions.py}.
 
 \subsubsection{Zpracování argumentů}
@@ -948,7 +989,7 @@ Slovník má následující klíče:
     \item \textit{names} -- seznam jmen, pomocí kterých lze argument zadat
     \item \textit{optional} -- určuje, zda je argument volitelný nebo ne
     \item \textit{has\_tail} -- určuje zda má argument 0, 1 nebo N parametrů
-    \item \textit{word\_index} -- index, pod kterým lze zadané hodny zpřístupni v hashi vráceném funkcí \textit{get\_settings}
+    \item \textit{word\_index} -- index, pod kterým lze zadané hodny zpřístupnit ve slovníku vráceném funkcí \textit{get\_settings}
     \item \textit{prerequisite} -- prerekvizity nebo podmínky, za kterých je možné tento argument zadat
     \item \textit{description} -- popis zadaného argumentu, který bude použit pro automatické generování nápovědy
 \end{itemize}
@@ -958,8 +999,8 @@ Další užitečnou podmínkou je řetězec \textit{\_\_alone\_\_}, který znač
 tak musí být jediným zadaným argumentem.
 
 Klíč \textit{has\_tail} může nabývat hodnot 0, 1 nebo 2. V ostatních případech chování není definováno.
-V případě hodnoty 0 se očekává, že argument nemže mít žádné parametry. Pokud je hodnotou 1, argument může
-nabývat právě jednoho parametru. V případě hodnoty 2 má argument minimálně minimálně 1 parametr.
+V případě hodnoty 0 se očekává, že argument nemůže mít žádné parametry. Pokud je hodnotou 1, argument může
+nabývat právě jeden parametr. V případě hodnoty 2 má argument minimálně jeden parametr.
 
 Návratovou hodnotou funkce je slovník, kde klíči jsou hodnoty \textit{word\_index} u takových argumentů, se kterými
 byl program spuštěn. Hodnoty těchto klíčů je vždy seznam zadaných parametrů.
@@ -969,8 +1010,9 @@ které mají nastavené \textit{optional} jako \textit{False}, jsou zadány argu
 počet parametrů argumentu nebo nejsou splněny prerekvizity, je vyvolána výjimka.
 
 \paragraph{Příklad užití}
-V tomto příkladě je ukázka použití zpracování argumentů funkce. Jedná se o skript, má jeden poviný
-argument -- \textit{$-$i}. Tento argument lze zadat i jako \textit{$--$input}. Tento argument má
+
+V tomto příkladě je ukázka použití zpracování argumentů funkce. Jedná se o skript, který má jeden poviný
+argument (\textit{$-$i}). Tento argument lze zadat i jako \textit{$--$input}. Tento argument má
 1 -- N parametrů. Program má nadále volitelný parametr \textit{$-$o}, který je možné zadat jako
 \textit{$--$output}. Výstupní soubor může být identifikován pouze jedním parametrem.
 Žádný z těchto argumentů nemá nastavené prerekvizity.
@@ -1032,11 +1074,11 @@ chyby, varování a ostatní výpisy (ladící výpisy, statistické údaje, apo
 Každou nalezenou chybu je možné v souboru poznat tak, že řádek souboru
 začíná znaky \texttt{-ERR$[$mezera$]$}. Za tímto řetězcem na tom samém řádku následuje
 stručný popis chyby. Dalším řádkem může (ale není to pravidlem) být podrobnější popis chyby.
-Podrobnější popsi chyby začíná znaky \texttt{-ERR\_STAR$[$LF$]$}, kde LF značí konec řádku (ascii hodnota 10).
+Podrobnější popis chyby začíná znaky \texttt{-ERR\_STAR$[$LF$]$}, kde LF značí konec řádku (ascii hodnota 10).
 Popis je ukončen znaky \texttt{-ERR\_END$[$LF$]$}.
 
 Podobně jako chyby se zapisují i varování. Varování lze identifikovat pomocí znaků \texttt{-WARN$[$mezera$]$},
-za kterýmy následuje stručný popis. Podrobný popis je zde opět volitelný. Podrobný popis je uvozen řádkem
+za kterými následuje stručný popis. Podrobný popis je zde opět volitelný. Podrobný popis je uvozen řádkem
 \texttt{-WARN\_STAR$[$LF$]$} a je ukončen řádkem \texttt{-WARN\_END$[$LF$]$}.
 
 Úplně stejný princip je použit i u ostatních logovacích výpisů. Rozdíl spočívá jen v tom, že
@@ -1069,23 +1111,23 @@ na jeden a ten samý server byla 1 sekunda. Komprese uložených dat byla do toh
 času také zahrnuta. Použitý modul pro kompresi byl \textit{lzma} \ref{lzma}.
 
 \subsection{Původní systém}
-Původní systém ke stahování využívá pouze jednoho vlákná a nemá nastavenou dobu
+Původní systém ke stahování využívá pouze jednoho procesu a nemá nastavenou dobu
 čekání na odpověď serveru, což vede k dlouhému a zbytečnému čekání na odpověď.
 Z těchto důvodů byla průměrná rychlost stahování 0.76 stránek za sekundu. Celková doba
 stahování byla 3 hodiny, 38 minut a 27 sekund. Protože během čekání na odpověď je
-proces uspán, bylo spotřebováno procesorového mnohem méně -- 2 hodiny, 16 minut a
-58 sekund. Celkem se pomocí tohoto nástroje podařilo stáhnout 8476 stránek.
+proces uspán, bylo spotřebováno procesorového času mnohem méně -- 2 hodiny, 16 minut a
+58 sekund. Celkem se pomocí tohoto nástroje podařilo stáhnout 8 476 stránek.
 
 \subsection{Nový systém}
 Pro nový systém nebylo žádným problémem zpracovat takové množství odkazů. Stahování
 trvalo celkem 38 minut a 48 sekund. Protože stahování běželo vícevláknově, bylo
-spotřebovány 2 hodiny, 27 minut a 40 sekund procesorového času. Maximální počet
+spotřebováno 2 hodiny, 27 minut a 40 sekund procesorového času. Maximální počet
 procesů pro stahování byl nastaven na 50. Celkem se podařilo stáhnout 8 734 stránek.
 
 \subsubsection{Vliv počtu procesů na dobu zpracování}
-Vliv počtu procesů na stahování má obrovský vliv na celkou dobu zpracování. V
-ideálním by rychlost stahování stoupala lineárně spolu s počtem procesů. Protože
-rychlost je omezena i minimální dobou přístupu na danou doménu, lineárního nárustu
+Počet použitých procesů má obrovský vliv na celkovou dobu zpracování. V
+ideálním případě by rychlost stahování stoupala lineárně spolu s počtem procesů. Protože
+rychlost je omezena i minimální dobou přístupu na danou doménu, lineárního růstu výkonu
 na reálných datech nikdy nedosáhneme. Graf \ref{graph:stahovani} znázorňuje výše
 zmíněnou skutečnost.
 
@@ -1098,9 +1140,9 @@ zmíněnou skutečnost.
 \end{figure}
 
 \section{Nástroje pro kompresi dat}
-Během výběru vhodného nástroje pro kompresi bylo třeba rozhodnout který nástroj
-je lepší použít. Doposud byly používány 2 nástroje ke kompresi dat -- \textit{gzip}
-a \textit{xz}, který využívá algoritmu \textit{lzma}. Pro zajímavost byl ke srovnání
+Během výběru vhodného nástroje pro kompresi dat bylo nutné rozhodnout, který nástroj
+je pro použití v tomto projektu vhodnější. Doposud byly používány dva nástroje ke kompresi dat -- \textit{gzip}
+a \textit{xz}. Nástroj \textit{xz} využívá algoritmu \textit{lzma}. Pro zajímavost byl ke srovnání
 přídán i populární nástroj \textit{zip}. Všechny nástroje byly spuštěny s nejvyšší
 úrovní komprese dat.
 
@@ -1108,14 +1150,14 @@ Vstupnímy daty pro tyto nástroje bylo 7 souborů o velikosti 100 MB, 200 MB, 3
 400 MB, 500 MB, 600 MB a 700 MB. Všechny tyto soubory obsahovaly stažené webové
 stránky ve formátu WARC \ref{warc_format}. Měření probíhalo na stroji athena1.
 
-Cílem měření výkonosti těchto nástrojů a efektivnosti algoritmů, které používají, bylo
+Cílem měření výkonnosti těchto nástrojů a efektivnosti algoritmů, které používají, bylo
 zvolit nejvhodnější nástroj pro kompresi. Měřenými daty byla náročnost na procesor
 během komprese a dekomprese dat a výsledná velikost archivu.
 
 \subsection{Výsledky měření}
 Na grafu \ref{graph:komprese} lze vidět zatížení procesorů během komprese dat.
 Nástroj \textit{gzip}  ve všech případech předčil nástroj \textit{zip}, přestože
-oba nástroje měli velice podobné výsledky. Nástroj \textit{xz} klade výrazně
+oba nástroje měly velice podobné výsledky. Nástroj \textit{xz} klade výrazně
 větší zátěž na procesor a zpracování tak trvá mnohem déle.
 
 \begin{figure}[H]
@@ -1140,9 +1182,9 @@ se jeho celková náročnost blíží k náročnosti ostatních nástrojů.
     \end{center}
 \end{figure}
 
-Důvodem, proč byl vybrán nástroj \textit{xz} ke kompresi dat byla výsledná
+Důvodem, proč byl vybrán nástroj \textit{xz} ke kompresi dat, byla výsledná
 velikost archivů. V grafu \ref{graph:vysledna_velikost} je vidět,
-jak moc v tomto ohledu předčil nástroje \textit{gzip} a \textit{zip}.
+jak moc nástroj \textit{xz} v tomto ohledu předčil nástroje \textit{gzip} a \textit{zip}.
 Nástroje \textit{gzip} a \textit{zip} dosáhly v tomto měření téměř totožných výsledků.
 
 \begin{figure}[H]
@@ -1154,30 +1196,30 @@ Nástroje \textit{gzip} a \textit{zip} dosáhly v tomto měření téměř toto�
 \end{figure}
 
 \section{Získání čistého textu, tokenizace a vertikalizace}
-Cílem k efektivní práci těchto částí projektu je potřebna najít kompromis
-delší dobou zpracování nebo vysokou paměťovou náročností. S
-počtem procesů roste rychlost zpracování, ale i paměťová náročnost. Vše má své hranice a
-záleží hlavně na stroji, kde je process spuštěn, při kolika procesech začne být
+Cílem k efektivní práci těchto částí projektu je potřeba najít kompromis mezi
+delší dobou zpracování a vysokou paměťovou náročností. S přibývajícím
+počtem procesů roste nejen rychlost zpracování, ale i paměťová náročnost. Vše má své hranice a
+záleží zejména na stroji, kde je nástroj spuštěn, při kolika procesech začne být
 zpracování neefektivní z důvodu nedostatku paměti nebo neschopnosti efektivně obsluhovat velké
-množství procesů. Abych bylo možné rychlost zpracování porovnast s původním
-systémem, bylo nutné sáhnoutpo starších webových kolekcí, které byly přizpůsobeny pro
+množství procesů. Aby bylo možné rychlost zpracování porovnast s původním
+systémem, bylo nutné sáhnout po starších webových kolekcí, které byly přizpůsobeny pro
 nástroj vertikalizátor.
 
-Vešekeré měření, včetně srovnání \textit{vertikalizátoru} \ref{vertikalizator} a současného systému, probíhalo na
+Vešekeré měření včetně srovnání \textit{vertikalizátoru} \ref{vertikalizator} a současného systému probíhalo na
 serveru athena1.
 
 \subsection{Srovnání systémů}
-Pro srovnání systému byly vybrány balíčky o přibližné velikosti 100 MB, 150 MB,
-200 MB a 250 MB. Oba nástroje byly spuštěny s vyplou detekci jazyka a nový systém
+Pro srovnání systémů byly vybrány balíčky o přibližné velikosti 100 MB, 150 MB,
+200 MB a 250 MB. Oba nástroje byly spuštěny bez detekce jazyka a nový systém
 byl spuštěn na 12 procesech (tento počet byl zvolen, protože byl v době tvorby této
-práce použit v automatickém zpracování. Měřenými hodnotami byla reálná doba zpracování
+práce použit v automatickém zpracování). Měřenými hodnotami byla reálná doba zpracování
 a procesorová náročnost.
 
 Graf \ref{graph:graph_vertikalizator_vs_ja} ukazuje výsledky srovnání obou nástrojů.
-Co se procesorové náročnosti týče, nový systém má vě většině případů horší výsledky
-než původní vertikalizátor. Nový systém ale nepochybně předčí ten starý v reálném
+Z hlediska procesorové náročnosti nový systém ukázal, že má ve většině případů horší výsledky
+než původní vertikalizátor. Nový systém ale nepochybně předčil ten starý systém v reálném
 čase (dokud má stroj dostatek paměti a více jader na procesoru nebo samotných procesorů). Pokud
-je potřeba oba systémy při spuštění na jednom procesoru, lze z grafů \ref{graph:graph_realny_cas_vertikalizace}
+je potřeba oba systémy porovnat při spuštění na jednom procesoru, lze z grafů \ref{graph:graph_realny_cas_vertikalizace}
 a \ref{graph:graph_procesorovy_cas_vertikalizace} vyčíst, že nový systém lehce zaostává
 za tím původním.
 
@@ -1185,14 +1227,14 @@ za tím původním.
     \begin{center}
         \label{graph:graph_vertikalizator_vs_ja}
         \includegraphics[width=1.0\textwidth]{obrazky-figures/graph_vertikalizator_vs_ja.png}
-        \caption{Srovnání původního vertikalizátoru a nového systému z hlediska časové a procoserové náročnosti.}
+        \caption{Srovnání původního vertikalizátoru a nového systému z hlediska časové a procesorové náročnosti.}
     \end{center}
 \end{figure}
 
 Na grafu \ref{graph:graph_realny_cas_vertikalizace} je názorná ukázka toho, jak velký vliv má počet
-procesorů na celkovou rychlost zpracování. Z grafu také vyplívá, že čím více je použito procesů,
+procesů na celkovou rychlost zpracování. Z grafu lze také vyčíst, že čím více je použito procesů,
 tím méně naroste výkon s dalším přidaným procesem. Z toho důvodu je zbytečné spouštět
-program s přehnaně velkým počtem prosů, byť by na to stroj mohl mít výpočetní kapacitu.
+program s příliš velkým počtem procesů, byť by na to stroj mohl mít výpočetní kapacitu.
 
 \begin{figure}[H]
     \begin{center}
@@ -1205,7 +1247,7 @@ program s přehnaně velkým počtem prosů, byť by na to stroj mohl mít výpo
 Vliv počtu procesů na celkovou spotřebu procesorového času není vůbec drastický. Vypočítaná data
 jsou znázorněna grafem \ref{graph:graph_procesorovy_cas_vertikalizace}. Zajímavé je,
 že čím větší je velikost zdrojových dat, tím větší vliv má i počet procesů na
-celkovou náročnost výpočetu.
+celkovou náročnost výpočtu.
 
 \begin{figure}[H]
     \begin{center}
@@ -1215,7 +1257,7 @@ celkovou náročnost výpočetu.
     \end{center}
 \end{figure}
 
-Cenou za rychlejší zpracování je ale paměťová náročnost. Vztah počtu procesů na maximální
+Cenou za rychlejší zpracování je vyšší paměťová náročnost. Vztah počtu procesů na maximální
 využití paměti během zpracování dat je znázorněn na grafu \ref{graph:graph_vertikalizace_pamet}.
 Na grafu je znázorněno maximální využití paměti během procesu zpracování.
 
@@ -1227,5 +1269,94 @@ Na grafu je znázorněno maximální využití paměti během procesu zpracován
     \end{center}
 \end{figure}
 
+
+\section{Tagging}
+Měřenými hodnotami při provádění taggingu byla procesorová náročnost, doba zpracování
+a množství využité paměti během zpracování. Vstupními daty byl soubor vertikalizovaných stránek
+vytvořený během měření taggigu. Velikost vertikálního souboru byla 102 MB. Původní velikost
+stažených dat (Před provedením vertikalizace) byla 249 MB. Tento soubor obsahoval celkem
+3408 stránek.
+
+Bez zásahu do zdrojového kódu lze náročnost zpracování ovlivnit dvěma způsoby.
+Prvním z nich je počet stránek zpracovaných během jednoho spuštění taggingu. Druhý způsob
+je počet procesů, které provádí tagging. Na následujících grafech je znázorněna závislost
+nastavení těchto parametrů na celkovou zátěž kladenou na stroj athena1 během zpracování.
+Jednotlivé funkce znázorněné v grafu jsou počty stránek zpracovaných během jednoho spuštění
+taggingu. Na ose X je poté znázorněn počet procesů použitých k provedení taggingu a na
+ose Y je znázorněna výsledná zátěž.
+
+Na grafu \ref{graph:graph_tagging_doba_zpracovani} je znázorněna závislost počtu procesů
+a počtu zpracovaných stránek během jednoho spuštění taggingu na celkovou časovou náročnost
+zpracování. Nejlepšího výsledku bylo dosaženo při použití 8 procesů a zpracování 50
+stránek během jednoho cyklu taggingu.
+
+\begin{figure}[H]
+    \begin{center}
+        \label{graph:graph_tagging_doba_zpracovani}
+        \includegraphics[width=1.0\textwidth]{obrazky-figures/graph_tagging_doba_zpracovani.png}
+        \caption{Vliv počtu procesů na celkovou dobu zpracování novým systémem.}
+    \end{center}
+\end{figure}
+
+Na grafu \ref{graph:graph_tagging_procesorovy_cas} je zobrazena spotřeba procesorového času.
+Nejlepších hodnot bylo vždy dosaženo při zpracování 50 stránek během jednoho spuštění taggingu.
+Co se počtu procesorů týče, tak nejlepšího výsledku bylo dosaženo při použití 4 procesů.
+
+\begin{figure}[H]
+    \begin{center}
+        \label{graph:graph_tagging_procesorovy_cas}
+        \includegraphics[width=1.0\textwidth]{obrazky-figures/graph_tagging_procesorovy_cas.png}
+        \caption{Vliv počtu procesů na celkovou procesorovou náročnost zpracování novým systémem.}
+    \end{center}
+\end{figure}
+
+Stejně jako u vertikalizace, i zde spolu s počtem procesů roste i velikost potřebné paměti.
+Graf \ref{graph:graph_tagging_pamet} zobrazuje vliv počtu procesů a počtu zpracovaných stránek
+během jednoho spuštění taggeru. Nejlepších dosažených výsledků bylo zpracování jedním procesem
+s 25 stránkami zprazovanými během jednoho cyklu taggingu.
+
+\begin{figure}[H]
+    \begin{center}
+        \label{graph:graph_tagging_pamet}
+        \includegraphics[width=1.0\textwidth]{obrazky-figures/graph_tagging_pamet.png}
+        \caption{Vliv počtu procesů na celkovou paměťovou náročnost zpracování novým systémem.}
+    \end{center}
+\end{figure}
+
 \chapter{Závěr}
+Byla vytvořena řada nových nástrojů umožňující automatickou kolekci, stahování a
+zpracování dat. Nástroje byly vyvýjeny a testovány zejména nad slovenskými a
+českými zpravodajskými deníky, ale je možné je použít na zpracování
+všech HTML stránek.
+
+Některé nástroje v tomto projektu již byly vyvinuty, v takových případech tento projekt
+nabízí alternativu k těmto nástrojů. Nové nástoje, které jsou v této práci popsané,
+umožňují maximální využití zdrojů stroje, na kterém jsou spuštěny a proto jsou
+schopny na strojích, které mají více jader na procesoru nebo dokonce více procesorů,
+zpracovat data mnohem rychleji. Ne příliš vysokou cenou za tuto rychlost je vyšší
+zátěž na procesor a množství potřebné paměti. Díky nástroje \textit{xz} je
+zde i větší úspora úložného prostoru dat než dřívějšího způsobu archivace pomocí
+nástroje \textit{gzip}.
+
+Další nezanedbatelnou výhodou je umožnění rychlé výměny nástrojů bez nutnosti přepisovat veškěré
+zdrojové kódy v případě, že se některý z použitých nástrojů ukáže jako méně vhodným.
+Narozdíl od předchozích projektů, tento umožňuje zpracovat data v českém, anglickém a
+slovenském jazyce. Není vyloučeno ani zpracování dalších jazyků v případě, že se
+k nim dodá jazykový model. Narozdíl od \textit{vertikalizátoru} \ref{vertikalizator},
+který je doposud používán mimojiné k detekci jazyka stránky, je nový systém schopen zpracovat
+nejen archiv, který obsahuje stránky v různém jazyce, ale dokonce i samotnou jednu stránku
+dokáže zpracovat, přestože samotná stránka je psána ve více jazycých, toto dává
+tomuto nástroji obrovskou výhodu při použití ke zpracování vícejazyčných webových stránek,
+komentářů, diskuzí nebo zpracování různých rezenzí a obsahu sociálních médií, kde se běžně
+oběvuje více jazyků.
+
+Nevýhodou tohoto systému je fakt, že aby bylo možné výstupní data této práce zpracovat dalšími
+nástroji, je nutné tyto nástroje upravit, aby byly schopny zpracovat nový formát. Naštěstí
+se nejedná o žádné zásadní úpravy a lze tento problém řešit i jiným způsobem. Jedním ze
+způsobů je implementace podpory formátu dat, který využívají dané nástroje. Tento projekt
+lze tedy spustit tak, aby výstupní data odpovídala formátu, který se doposud používal,
+za tuto podporu se platí ztrátou některých výhod, jako je například detekce
+jazyka. Druhou možností je vytvoření jednoduchých programů, které převedou nový formát
+do starého a po použití potřebných nástrojů zase zpět. Tímto se ale ztrácí úspora času
+a jednoduchost použití tohoto systému.
 %=========================================================================

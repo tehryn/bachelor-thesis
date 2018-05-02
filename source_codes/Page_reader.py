@@ -42,7 +42,7 @@ class Page_reader( object ):
 
             try:
                 yield Page( page = content, url = uri, http_response = response.decode(), page_id = warc_id, old_style = self._old_style )
-                sys.stdout.write( '-----' + str( cnt ) + '-----\n' )
+                sys.stderr.write( '-----' + str( cnt ) + '-----\n' )
                 cnt += 1
             except ValueError:
                 pass

@@ -7,26 +7,10 @@ import Functions
 class Page( object ):
     tag_begin = 'TagStartsWithqusdfgRnxALvnFbghE'
     def __init__( self, page, url, http_response, page_id, old_style = False ):
-        self._response   = http_response
         self._id         = page_id
         self._url        = url
         self._old_style  = old_style
-        self.encoding    = 'utf-8'
-        idx = http_response.find( 'charset=' )
-        if ( idx >= 0 ):
-            self.encoding = http_response[ idx + 8 : ]
-            idx = self.encoding.find( '\n' )
-            if ( idx >= 0  ):
-                self.encoding = self.encoding[ :idx].strip()
-            else:
-                self.encoding = 'utf-8'
-        try:
-            self._page = page.decode( self.encoding )
-        except:
-            try:
-                self._page = Functions.decode_data( page )
-            except:
-                raise ValueError('Nelze dekodovat stranku')
+        self._page       = Functions.decode_page( page, http_response )
         super().__init__()
 
     @staticmethod
@@ -78,7 +62,7 @@ class Page( object ):
         self._page = re.sub( r'<[^>]*>', '', self._page )
 
     def get_text( self ):
-        title = self.retrieve_page_title()
+        title = html.unescape( self.retrieve_page_title() )
         self._remove_trash()
         self._process_links()
         self._process_images()

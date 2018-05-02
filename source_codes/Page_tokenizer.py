@@ -34,7 +34,9 @@ class Page_tokenizer( object ):
                     lang = None
                 output_languages.put( lang )
             else:
+                sys.stderr.write( 'koncim\n' )
                 break
+        time.sleep(0.1)
 
     def _tokenizer( self, input_queue, output_queue ):
         command = [ self._tokenizer_bin, '--tokenizer=' + self._detect, '--output=vertical' ]
@@ -47,32 +49,29 @@ class Page_tokenizer( object ):
                 removed = list()
                 tmp      = ''
                 new_page = ''
-                try:
-                    for line in page.get_text().splitlines():
-                        if ( re.match( r'</?doc.*>|<img.*>|</?link.*>|</?head>|</?p>|</?div>|</?h[1-5]>', line ) ):
-                            if ( line == '<div>' ):
-                                line = '<p>'
-                            elif ( line == '</div>' ):
-                                line = '</p>'
-                            new_page += tmp + line + '\n'
-                            tmp = ''
-                            continue
-                        else:
-                            line = re.sub( r'([\w])([^\w\s])|([^\w\s])([\w])', r'\1\3\n<g/>\n\2\4', line )
-                        tmp += line  + '\n'
-                except:
-                    continue
+                for line in page.get_text().splitlines():
+                    if ( re.match( r'</?doc.*>|<img.*>|</?link.*>|</?head>|</?p>|</?div>|</?h[1-5]>', line ) ):
+                        if ( line == '<div>' ):
+                            line = '<p>'
+                        elif ( line == '</div>' ):
+                            line = '</p>'
+                        new_page += tmp + line + '\n'
+                        tmp = ''
+                        continue
+                    else:
+                        line = re.sub( r'([\w])([^\w\s])|([^\w\s])([\w])', r'\1\3\n<g/>\n\2\4', line )
+                    tmp += line  + '\n'
                 page.clear()
                 for line in new_page.splitlines():
                     if ( re.match( r'</?doc.*>|<img.*>|</?link.*>|</?head>|</?p>|</?h[1-5]>|<g/>', line ) ):
                         if ( line.startswith( '<link' ) ):
-                            removed.append( '="' + page.get_absolute_url( line[7:-2] ) + '">' )
+                            removed.append( '="' + page.get_absolute_url( line[7] ) )
                             line = '<link>'
                         elif ( line.startswith( '<img' ) ):
-                            removed.append( '="' + page.get_absolute_url( line[6:-2] ) + '">' )
+                            removed.append( '="' + page.get_absolute_url( line[6:] ) )
                             line = '<img>'
                         elif ( line.startswith( '<doc' ) ):
-                            removed.append( line[4:-1] )
+                            removed.append( line[4:] )
                             line = '<doc>'
                         line = Page.encode_tag( line )
                     send_buff += line + '\n'
@@ -88,44 +87,57 @@ class Page_tokenizer( object ):
                     ret_value = process.communicate()[0].decode()
                 #    sys.stderr.write( 'skipped: ' + page.get_url() +'\n' )
                 replaced  = ''
-                sentence  = 0 # 0 - mimo vetu, 1 - ve vete
-                paragraph = 0 # 0 - mimo, 1 - uvnitr
+                sentence  = 0 # 0 - mimo vetu, 1 - ve vete, 3 - ukoncit
+                paragraph = 0 # 0 - mimo, 1 - mozna zacina, 2 - unvnitr, 3 - ukoncit
                 link_len  = -1
+                odeslano  = 0
                 translator_buffer = ''
                 for line in ret_value.splitlines():
                     if ( line.startswith( Page.tag_begin ) ):
                         line = Page.decode_tag( line )
-                        if ( paragraph == 1 ):
-                            if ( re.match( r'<(/?p|/?h[1-5]|/?head|/?doc)>', line ) ):
-                                paragraph = 0
-                                if ( self._langdetect ):
-                                    translator_inqueue.put( translator_buffer )
-                                    translator_buffer = ''
-                                if ( line == '<p>' ):
-                                    paragraph = 1
-                                elif ( line == '<doc>' ):
-                                    rest = removed.pop(0)
-                                    line = '<doc' + rest
-                                if ( sentence == 1 ):
-                                    replaced += '</s>\n</p>\n' + line + '\n'
-                                    sentence = 0
-                                else:
-                                    replaced += '</p>\n' + line + '\n'
+                        if ( paragraph == 2 and re.match( r'<(/?p|/?h[1-5]|/?head|/?doc)>', line ) ):
+                            paragraph = 0
+                            if ( line == '<p>' ):
+                                paragraph = 1
+                            elif ( line == '<doc>' ):
+                                rest = removed.pop(0)
+                                line = '<doc' + rest
+                            if ( line != '</p>' ):
+                                line = '</p>\n' + line
+                            if ( sentence == 1 ):
+                                line = '</s>\n' + line
+                                sentence = 0
+                        else:
+                            if ( line == '<p>' or line == '</p>' ):
                                 continue
-                        if ( line == '<link>' ):
-                            rest = removed.pop(0)
-                            link_str = '<link' + rest
-                            link_len = 0
-                            continue
-                        elif ( line == '<g/>' and replaced[-5:-1] == '</s>' ):
-                            replaced = replaced[:-5] + '<g/>\n</s>\n'
-                            continue
-                        elif ( line == '<img>' ):
-                            rest = removed.pop(0)
-                            line = '<img' + rest + '\t<lenght=1>'
-                        elif ( line == '</link>' ):
-                            line = link_str + '\t<lenght=' + str( link_len ) + '>'
-                            link_len = -1
+                            elif ( line == '<link>' ):
+                                rest = removed.pop(0)
+                                link_str = '<link' + rest
+                                link_len = 0
+                                continue
+                            elif ( line == '<doc>' ):
+                                rest = removed.pop(0)
+                                line = '<doc' + rest
+                            elif ( line == '<g/>' and replaced[-5:-1] == '</s>' ):
+                                replaced = replaced[:-5] + '<g/>\n</s>\n'
+                                continue
+                            elif ( line == '<img>' ):
+                                rest = removed.pop(0)
+                                line = '<img' + rest + '\t<lenght=1>'
+                                if ( paragraph == 0 ):
+                                    line = '<p>\n<s>\n' + line
+                                paragraph = 2
+                            elif ( line == '</link>' ):
+                                if ( link_len < 0 ): # Obcas nejaky chytrak da odkaz dovnitr odkazu...
+                                    link_len = 0
+                                if ( paragraph == 0 ):
+                                    link_str = '<p>\n<s>\n' + link_str
+                                paragraph = 2
+                                sentence  = 1
+                                line = link_str + '\t<lenght=' + str( link_len ) + '>'
+                                link_len = -1
+                            elif ( paragraph == 1 and line == '</doc>' ):
+                                replaced = replaced[:-4]
                     else:
                         if ( self._langdetect ):
                             translator_buffer += line + '\n'
@@ -135,29 +147,44 @@ class Page_tokenizer( object ):
                                 sentence = 1
                             if ( paragraph == 0 ):
                                 line = '<p>\n' + line
-                                paragraph = 1
+                                paragraph = 2
+                            elif ( paragraph == 1 ):
+                                paragraph = 2
                         elif ( sentence == 1 ):
                             line = '</s>' + line
                             sentence = 0
-                    if ( link_len >= 0):
+                    if ( link_len >= 0 ):
                         link_len += 1
+                    if ( self._langdetect and '</p>' in line ):
+                        odeslano += 1
+                        translator_inqueue.put( translator_buffer )
+                        translator_buffer = ''
                     replaced += line + '\n'
-                translator_inqueue.put( None )
-                translated = ''
+
                 if ( self._langdetect ):
+                    translated = ''
+                    translator_inqueue.put( None )
                     for line in replaced.splitlines():
                         if ( line == '<p>' ):
-                            lang = translator_outqueue.get()
-                            if ( lang ):
-                                line = '<p lang="' + lang + '">'
+                            if ( odeslano == 0 ):
+                                sys.stderr.write( "DEADLOCK\n" )
+                                break
+                            else:
+                                lang = translator_outqueue.get()
+                                odeslano -= 1
+                                if ( lang ):
+                                    line = '<p lang="' + lang + '">'
                         translated += line + '\n'
-                    translated = re.sub( r'<(p|s|h[1-5])>\n</\1>\n', '', translated)
                     output_queue.put( translated )
+                    if ( odeslano != 0 ):
+                        sys.stderr.write( "NEBYLO PRELOZENO VSE\n" )
+                        sys.stderr.write( replaced )
+
                 else:
-                    replaced = re.sub( r'<(p|s|h[1-5])>\n</\1>\n', '', replaced)
                     output_queue.put( replaced )
             else:
                 output_queue.put( None )
+                time.sleep(0.1) # Tohle by se delat nemelo - je to tu jen pro jistotu
                 break
 
     def __iter__( self ):
@@ -179,6 +206,7 @@ class Page_tokenizer( object ):
                 pass
         for i in range( self._processes ):
             input_queue.put( None )
+        input_queue.close()
         cond = self._processes
         while ( cond > 0 ):
             tokenized = output_queue.get()
@@ -188,9 +216,13 @@ class Page_tokenizer( object ):
                 cnt += 1
             else:
                 cond -= 1
+        input_queue.join_thread()
+        output_queue.close()
+        output_queue.join_thread()
 
 if __name__ == '__main__':
     # input_file tagger_bin tagger_file timeout
-    parser = Page_tokenizer( tokenizer_bin = sys.argv[2], filename = sys.argv[1], lang_detect = True, processes = 1 )
+    parser = Page_tokenizer( tokenizer_bin = sys.argv[2], filename = sys.argv[1], lang_detect = True, processes = 10)
     for tagged in parser:
         print( tagged )
+        #pass
