@@ -87,10 +87,20 @@ nástrojem gzip.
 
 Informace obsažené v této kapitole byly získány z webových stránek projektu \cite{CLUEWEB}.
 
+\section{Common Crawl corpus}
+\label{commoncrawl}
+\textit{Common Crawl corpus} je volně dostupným webovým korpusem spravovaný neziskovou organizací
+\textit{The Common Crawl Foundation}. Aktuální velikost korpusu se pohybuje v řádech petabajtů a
+jsou zde obsaženy webové stránky stažené za posledních 7 let. Tebto korpus obsahuje miliardy
+webových stránek ve více než 40 jazycích.
+
+Informace obsažené v této kapitole byly získány z webových stránek projektu \cite{COMMONCRAWL}.
+
 \section{ChatNoir}
-\textit{ChatNoir}, francouzky černá kočka, je novým vyhledávačem, který pracuje nad korpusovými daty. Korpus,
+\textit{ChatNoir}, francouzky černá kočka, je vyhledávačem, který pracuje nad korpusovými daty. Korpus,
 který byl k tvorbě tohoto vyhledávače použit, je anglickou podmnožinou dat korpusu \textit{ClueWeb09 corpus}
 \ref{ClueWeb09} (anglická podmnožina obsahuje 500 milionů stránek s celkovou veliksotí 12 TB ) \cite{CHATNOIR}.
+Dalším z použitých zdrojů dat je rozsáhlý webový korpus \textit{Common Crawl corpus} \ref{commoncrawl} \cite{COMMONCRAWL_EXAMPLES}.
 
 Projekt \textit{ChatNoir} je psán převážně v jazyku Java a v procesu je, kromě jiného, zapojeno získání textu z
 HTML stránek, detekcí jazyka a tvorba indexů pro vyhledávač \cite{CHATNOIR_GIT}.
@@ -416,7 +426,7 @@ byl nástroj \textit{Pexpect} nahrazen nástrojem \textit{subprocess}.
 \subsection{Langdetect}
 \label{langdetect}
 \textit{Langdetect} je jednou z řady knihoven jazyka Python určených pro detekci jazyka.
-Jedná se o import knihovny \textit{langue-detection}, která byla vyvýjená společností Google
+Jedná se o import knihovny \textit{langue-detection}, která byla vyvíjená společností Google
 pro jazyk Java \cite{LANGDETECT}. Tato knihovna je v projektu použita pro detekci jazyka,
 protože má poměrně dobré výsledky i na krátkých textových úsecích.
 
@@ -1271,10 +1281,10 @@ Na grafu je znázorněno maximální využití paměti během procesu zpracován
 
 
 \section{Tagging}
-Měřenými hodnotami při provádění taggingu byla procesorová náročnost, doba zpracování
+Měřenými hodnotami při provádění taggingu byly: procesorová náročnost, doba zpracování
 a množství využité paměti během zpracování. Vstupními daty byl soubor vertikalizovaných stránek
-vytvořený během měření taggigu. Velikost vertikálního souboru byla 102 MB. Původní velikost
-stažených dat (Před provedením vertikalizace) byla 249 MB. Tento soubor obsahoval celkem
+vytvořený během měření taggingu. Velikost vertikálního souboru byla 102 MB. Původní velikost
+stažených dat (před provedením vertikalizace) byla 249 MB. Tento soubor obsahoval celkem
 3408 stránek.
 
 Bez zásahu do zdrojového kódu lze náročnost zpracování ovlivnit dvěma způsoby.
@@ -1310,10 +1320,10 @@ Co se počtu procesorů týče, tak nejlepšího výsledku bylo dosaženo při p
     \end{center}
 \end{figure}
 
-Stejně jako u vertikalizace, i zde spolu s počtem procesů roste i velikost potřebné paměti.
+Stejně jako u vertikalizace, i zde spolu s počtem procesů roste velikost potřebné paměti.
 Graf \ref{graph:graph_tagging_pamet} zobrazuje vliv počtu procesů a počtu zpracovaných stránek
-během jednoho spuštění taggeru. Nejlepších dosažených výsledků bylo zpracování jedním procesem
-s 25 stránkami zprazovanými během jednoho cyklu taggingu.
+během jednoho spuštění taggeru. Nejlepších výsledků bylo dosaženo při zpracování jedním procesem
+s 25 stránkami zpracovanými během jednoho cyklu taggingu.
 
 \begin{figure}[H]
     \begin{center}
@@ -1324,38 +1334,38 @@ s 25 stránkami zprazovanými během jednoho cyklu taggingu.
 \end{figure}
 
 \chapter{Závěr}
-Byla vytvořena řada nových nástrojů umožňující automatickou kolekci, stahování a
-zpracování dat. Nástroje byly vyvýjeny a testovány zejména nad slovenskými a
+Byla vytvořena řada nových nástrojů umožňujících automatickou kolekci, stahování a
+zpracování dat. Nástroje byly vyvíjeny a testovány zejména nad slovenskými a
 českými zpravodajskými deníky, ale je možné je použít na zpracování
 všech HTML stránek.
 
 Některé nástroje v tomto projektu již byly vyvinuty, v takových případech tento projekt
-nabízí alternativu k těmto nástrojů. Nové nástoje, které jsou v této práci popsané,
-umožňují maximální využití zdrojů stroje, na kterém jsou spuštěny a proto jsou
+nabízí alternativu k těmto nástrojům. Nové nástoje, které jsou v této práci popsané,
+umožňují maximální využití zdrojů stroje, na kterém jsou spuštěny, a proto jsou
 schopny na strojích, které mají více jader na procesoru nebo dokonce více procesorů,
 zpracovat data mnohem rychleji. Ne příliš vysokou cenou za tuto rychlost je vyšší
-zátěž na procesor a množství potřebné paměti. Díky nástroje \textit{xz} je
-zde i větší úspora úložného prostoru dat než dřívějšího způsobu archivace pomocí
+zátěž na procesor a množství potřebné paměti. Díky nástroji \textit{xz} je
+zde i větší úspora úložného prostoru dat než u dřívějšího způsobu archivace pomocí
 nástroje \textit{gzip}.
 
 Další nezanedbatelnou výhodou je umožnění rychlé výměny nástrojů bez nutnosti přepisovat veškěré
 zdrojové kódy v případě, že se některý z použitých nástrojů ukáže jako méně vhodným.
-Narozdíl od předchozích projektů, tento umožňuje zpracovat data v českém, anglickém a
+Na rozdíl od předchozích projektů, tento umožňuje zpracovat data v českém, anglickém a
 slovenském jazyce. Není vyloučeno ani zpracování dalších jazyků v případě, že se
-k nim dodá jazykový model. Narozdíl od \textit{vertikalizátoru} \ref{vertikalizator},
-který je doposud používán mimojiné k detekci jazyka stránky, je nový systém schopen zpracovat
-nejen archiv, který obsahuje stránky v různém jazyce, ale dokonce i samotnou jednu stránku
-dokáže zpracovat, přestože samotná stránka je psána ve více jazycých, toto dává
-tomuto nástroji obrovskou výhodu při použití ke zpracování vícejazyčných webových stránek,
-komentářů, diskuzí nebo zpracování různých rezenzí a obsahu sociálních médií, kde se běžně
+k nim dodá jazykový model. Na rozdíl od \textit{vertikalizátoru} \ref{vertikalizator},
+který je doposud používán kromě jiného k detekci jazyka stránky, je nový systém schopen zpracovat
+nejen archiv, obsahující stránky v různých jazycích, ale dokonce i samotnou stránku psanou
+ve více než jednom jazyce. Tato schopnost zpracovat vícejazyčné texty dává novému
+systému obrovskou výhodu při použití ke zpracování vícejazyčných webových stránek,
+komentářů, diskuzí nebo zpracování různých recenzí a obsahu sociálních médií, kde se běžně
 oběvuje více jazyků.
 
-Nevýhodou tohoto systému je fakt, že aby bylo možné výstupní data této práce zpracovat dalšími
-nástroji, je nutné tyto nástroje upravit, aby byly schopny zpracovat nový formát. Naštěstí
-se nejedná o žádné zásadní úpravy a lze tento problém řešit i jiným způsobem. Jedním ze
+Nevýhodou tohoto systému je skutečnost, že zpracování výstupních dat této práce dalšími nástroji
+je možné až po úpravě těchto nástrojů tak, aby byly schopny zpracovat nový formát dat.
+Naštěstí se nejedná o žádné zásadní úpravy a lze tento problém řešit i jiným způsobem. Jedním ze
 způsobů je implementace podpory formátu dat, který využívají dané nástroje. Tento projekt
-lze tedy spustit tak, aby výstupní data odpovídala formátu, který se doposud používal,
-za tuto podporu se platí ztrátou některých výhod, jako je například detekce
+lze tedy spustit tak, aby výstupní data odpovídala formátu, který se doposud používal.
+Za tuto podporu se platí ztrátou některých výhod, jako je například detekce
 jazyka. Druhou možností je vytvoření jednoduchých programů, které převedou nový formát
 do starého a po použití potřebných nástrojů zase zpět. Tímto se ale ztrácí úspora času
 a jednoduchost použití tohoto systému.

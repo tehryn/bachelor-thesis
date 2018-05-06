@@ -108,10 +108,11 @@ if ( 'input' not in settings ):
 old_format = True if ( 'format' in settings ) else False
 langdetect = True if ( 'langdetect' in settings ) else False
 
-tokenizer = Page_tokenizer( filename = settings['input'][0], tokenizer_bin = settings['tokenizer'][0], processes = processes, old_style = old_format, lang_detect = langdetect )
+for filename in settings[ 'input' ]:
+    tokenizer = Page_tokenizer( filename = filename, tokenizer_bin = settings['tokenizer'][0], processes = processes, old_style = old_format, lang_detect = langdetect )
 
-for record in tokenizer:
-    if ( use_lzma ):
-        out.write( record.encode() )
-    else:
-        out.write( record )
+    for record in tokenizer:
+        if ( use_lzma ):
+            out.write( record.encode() )
+        else:
+            out.write( record )
