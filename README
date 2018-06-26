@@ -1,0 +1,118 @@
+------------------------------
+Stručně o projektu
+------------------------------
+Název: Rozšíření systému pro získávání, zpracování a analýzu rozsáhlých kolekcí textů z webu
+Autor: Jiří Matějka
+
+Tento projekt slouží k rozšíření stávajícího systému pro získávání, zpracování a analýzu rozsáhlých kolekcí textů z webu.
+V tomto projektu lze najít knihovny pro umožňující kolekci odkazů, stažhování stránek a analýzu získaného textu. Jsou zde
+použita i externí aplikace morphodita (https://github.com/ufal/morphodita). Dále zde lze najít skripty, které využívají výše
+zmíněných knihoven a umožňují zpracování dat. K automatizaci veškerých činností je zde aplikace "Velký bratr"
+
+
+------------------------------
+Struktura
+------------------------------
+V tomto adresáři se nachází archiv "libary.zip", který obsahuje nástroj morphodita a soubory potřebné k jeho fungování.
+Ve složce "src" jsou uloženy veškeré zdrojové soubory. Dále je zde skript configure.sh, který umožňuje instalaci
+nástrojů pro automatické zpracování. Prototyp, který byl prezentován v rámci semestrálního projektu je umístěn
+ve složce "prototype".
+
+Morphodita:
+./libary.zip
+
+Knihovny:
+./src/Link_collector.py
+./src/Functions.py
+./src/Page_generator.py
+./src/Page_reader.py
+./src/Page_parser.py
+./src/Page_tokenizer.py
+./src/Page_downloader.py
+./src/Page.py
+./src/Page_tagger.py
+
+
+Skripty:
+./src/html_to_vert.py
+./src/rss_collector.py
+./src/link_collector.py
+./src/big_brother.py
+./src/tagger.py
+./src/page_downloader.py
+
+Prototyp:
+./prototype/bin/udpipe
+./prototype/models/czech-ud-1.2-160523.udpipe
+./prototype/scripts/.reparser_udpipe.py.swp
+./prototype/scripts/reparser_udpipe.py
+./prototype/scripts/tokenizer_vert2udpipe.py
+./prototype/sec_config.json
+./prototype/sec_config_new.json
+
+
+Ostatni:
+./README
+./configure.sh
+
+------------------------------
+Instalace
+------------------------------
+K instalaci lze použit skript "configure.sh". Pro správný běh skriptu je potřebné mít nainstalované nástroje "python3" a "pip3".
+Pro archivaci dat je potřebné mít nainstalován nastroj "xz".
+
+V připadě, že tyto nástroje máte nainstalovány, spusťte příkaz "bash configure.sh"
+
+------------------------------
+Spuštění
+------------------------------
+Každý skkript lze spustit s parametrem "-h" k získání nápovědy.
+
+Spuštění celého procesu lze provést aplikací Velký bratr.
+
+------------------------------
+Velký bratr
+------------------------------
+Velký bratr je implementován skriptem "./src/big_brother.py". Automatické zpracování se doporučuje spustit na pozadí.
+Velký bratr má za úkol monitorovat celý průběh zpracování a udržovat ho za běhu. Je schopen detekovat téměř všechny
+chyby, které nastanou během zpracování dat a informovat o nich v pravidelně odesílaných zprávách emailem. Na základě
+jeho zpráv lze efektivně detekovat slabá místa zpracování, detekovat deadlocky, vést statistiku a být průběžně
+informován a aktuálním stavu systému pro získávání, zpracování a analýzu rozsáhlých kolekcí textů z webu.
+
+------------------------------
+Příklady spuštění
+------------------------------
+./src/big_brother.py -e xmatej52@stud.fit.vutbr.cz -s statistika.txt
+
+Spustí základní funkce Velkého bratra. Každý den se odešle email na adresu xmatej52@stud.fit.vutbr.cz a statistika
+bude vedena v souboru statistika.txt
+
+-----
+./src/big_brother.py -e xmatej52@stud.fit.vutbr.cz -s statistika.txt -a
+
+Zpracování stránek bude spouštěno každé 2 hodiny. Odesílání emailů bude také probídat každé 2 hodiny.
+
+-----
+./src/big_brother.py -e xmatej52@stud.fit.vutbr.cz -s statistika.txt -a -c
+
+Zpracování stránek bude spouštěno každé 2 hodiny. Odesílání emailů bude také probídat každé 2 hodiny.
+Navíc bude vytvořen (nebo aktualizován) soubor "rss_sources/automatic_collection.txt", kam se budou
+ukladat nove nalezene RSS a ATOM zdroje. Takto nalezene zdroje budou zarazeny do zpracovani behem
+dalsi kolekce odkazu.
+
+------------------------------
+Spuštění prototypu
+------------------------------
+Pro správné fungování prototypu je nutné ho spustit na serveru "athena2.fit.vutbr.cz".
+
+./tokenizer_vert2udpipe.py input.vert tag_file | \
+./prototype/bin/udpipe --tag --parse ./prototype/models/czech-ud-1.2-160523.udpipe | \
+./reparser_udpipe.py tag_file | \
+python /var/secapi/SEC_API/sec.py --filename vystup.mg4j -c ./prototype/sec_config_new.json --plaintext 2>err_log >vystup.mg4j
+
+input.ver je výstupní soubor vertikalizátoru. 
+tag_file je soubor, kde jsou poznačeny tagy z vertikalizátoru - soubor bude vytvořen, pokud existuje, obsah bude přepsán
+tag_file stejný soubor jako výše ( tokenizer zde uloží značky, reparser si je přečte )
+vystup.mg4j výstupní soubor celého zpracování.
+
+Pokud je potřeba výstup ve starém formátu SEC, lze použít configurační soubor ./prototype/sec_config.json

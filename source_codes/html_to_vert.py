@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Tento skript slouzi ke stahovani stranek.
-Autor: Jiří Matějka
-Verze: 2.011 (2018-04-10)
+Author: Jiri Matejka (xmatej52)
+
+Toto je obsluzny skript pro tridu Page_tokenizer, kde je implementovan proces Vertikalizace.
 """
 import sys
 import lzma
@@ -76,6 +76,15 @@ possible_arguments = [
         'prerequisite' : 'format',
         'description'  : 'Pokud je tento parametr zadan, bude provadena detekce jazyka. Lze kombinovat pouze s parametrem --format_new'
     },
+    {
+        'names'        : [ '--errors',   '-e' ],
+        'optional'     : True,
+        'has_tail'     : 1,
+        'word_index'   : 'error',
+        'prerequisite' : None,
+        'description'  : 'Pokud je nastaven, tak namisto stderr jsou chyby vypisovany do souboru urcenho ' +
+                         'timto parametrem.'
+    }
 ]
 
 settings = dict()
@@ -116,3 +125,11 @@ for filename in settings[ 'input' ]:
             out.write( record.encode() )
         else:
             out.write( record )
+
+    error = tokenizer.get_errors_info()
+    if ( error ):
+        if ( 'error' in settings ):
+            with open( settings[ 'error' ][0], 'a' ) as err:
+                err.write( error )
+        else:
+            sys.stderr.write( error )

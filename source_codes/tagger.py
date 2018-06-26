@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
+"""
+Author: Jiri Matejka (xmatej52)
+
+Toto je obsluzny skript pro tridu Page_tagger, kde je implementovan tagging.
+"""
 import sys
 import lzma
-from Functions import get_setting, print_help, get_exception_info
+from Functions import get_setting, print_help
 from Page_tagger import Page_tagger
 
 author = "Author:\n" + \
@@ -70,7 +75,7 @@ possible_arguments = [
         'word_index'   : 'pages',
         'prerequisite' : None,
         'description'  : 'Pocet stranek, ktere se maji najednou zpracovat taggerem. ' +
-                         'Vychozi hodnota je 150'
+                         'Vychozi hodnota je 50'
     },
 ]
 
@@ -85,18 +90,19 @@ except:
         raise
 
 out = sys.stdout
+use_lzma = False
 if ( 'output' in settings ):
-    if ( settings[ 'output' ][0].endswith('.vert') ):
-        out = open( settings[ 'output' ][0], 'w' )
-    else:
-        use_warc = True
+    if ( settings[ 'output' ][0].endswith('.xz') ):
         out = lzma.open( settings[ 'output' ][0], 'w' )
+        use_lzma = True
+    else:
+        out = open( settings[ 'output' ][0], 'w' )
 
 processes = 10
 if ( 'processes' in settings ):
     processes = int( settings[ 'processes' ][0] )
 
-pages = 150
+pages = 50
 if ( 'pages' in settings ):
     pages = int( settings[ 'pages' ][0] )
 
@@ -118,4 +124,7 @@ for file in settings['input']:
         tagger.set_language( language = lang, tagger = model )
 
     for record in tagger.process_tagging():
-        out.write( record.encode() )
+        if ( use_lzma ):
+            out.write( record.encode() )
+        else:
+            out.write( record )

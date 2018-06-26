@@ -1,8 +1,17 @@
-import Functions
+"""
+Author: Jiri Matejka (xmatej52)
+
+V tomto modulu je rozsiren proces stahovani stranek - je pridana casova mezera mezi 2 pristupy na jednu domenu.
+"""
 import time
+import Functions
 from Page_downloader import Page_downloader
 
 class Page_generator( Page_downloader ):
+    """
+    Trida rozdeli zadane odkazy a pote je postupne stahuje tak, aby mezi
+    dvema dotazy na jeden server byla casova mezera.
+    """
     _pause         = 0
     _links         = dict()
 
@@ -12,6 +21,7 @@ class Page_generator( Page_downloader ):
             self._pause = pause
         self._threads = threads
 
+        # rozdtridime si URL podle domen
         for item in iterable:
             index = -1
             if ( item.startswith( 'https://' ) or item.startswith( 'http://' ) ):
@@ -24,6 +34,7 @@ class Page_generator( Page_downloader ):
             self._links[ key ].append( item )
 
     def _get_one_page( self, key ):
+        # stahneme jednu stranku.
         link = self._links[ key ].pop()
         if ( len( self._links[ key ] ) == 0 ):
             del self._links[ key ]
@@ -35,6 +46,7 @@ class Page_generator( Page_downloader ):
             return { 'content': page[ 'value' ], 'url' : link, 'response' : page[ 'response' ] }
 
     def _get_more_pages( self, keys ):
+        # stahneme stranky za pomoci vice procesu, dost uzitecna vec.
         links = list()
         for key in keys:
             links.append( self._links[ key ].pop() )
@@ -53,6 +65,7 @@ class Page_generator( Page_downloader ):
     def __iter__( self ):
         first_download = 0
         last_download  = 0
+        # pokud stahujeme jednovlaknove, nebudeme si nic komplikovat
         if ( self._threads == 0 ):
             while ( len(self. _links ) > 0 ):
                 first_download = time.time()
@@ -65,21 +78,30 @@ class Page_generator( Page_downloader ):
                 nap_time = last_download - first_download
                 if ( nap_time < self._pause ):
                     time.sleep( self._pause - nap_time )
+        # Ale kdo by bojoval s jednim vojackem, kdyz muze mit armadu
         else:
             while ( len(self. _links ) > 0 ):
                 first_download = time.time()
                 keys = list()
+                # pro kazdou z domen se pokusime pustit jeden proces
+                # ale musime dat bacha, abychom nespustili vice procesu, nez chce uzivatel
                 for key in list( self._links ):
+                    # dokud muzeme spoustet procesy, tak si ukladame url
                     if len( keys ) <= self._threads:
                         keys.append( key )
                         continue
+                    # ale kdyz uz jsme dosahli poctu pozadovanych procesu a mame pripravene url
+                    # tak spustime procesy
                     else:
                         pages = self._get_more_pages( keys )
                         keys  = list()
+                        # ulozime si cas posledniho stazeni
                         last_download = time.time()
                         for page in pages:
                             if ( page ):
                                 yield page
+                # pokud nemuzeme spustit tolik procesu, kolik by si uzivatel pral
+                # tak spustime alespon maximum, kolik muzeme
                 if ( len( keys ) > 0 ):
                     pages = self._get_more_pages( keys )
                     keys  = list()
@@ -87,7 +109,9 @@ class Page_generator( Page_downloader ):
                     for page in pages:
                         if ( page ):
                             yield page
+                # vypocitame dobu, ktera ubehla mezi 2 dotazy na server
                 nap_time = last_download - first_download
+                # a pokud ta doba je mensi, nez se vyzaduje, uspime zpracovani na minimalni moznou dobu.
                 if ( nap_time < self._pause ):
                     time.sleep( self._pause - nap_time )
 
@@ -182,5 +206,5 @@ if __name__ == '__main__':
     }
 
     page_generator = Page_generator( urls, pause=5 )
-    for page in page_generator:
+    for pagee in page_generator:
         pass

@@ -1,8 +1,9 @@
 """
-V tomto modulu se nachazi implemetace tridy Link_collector.
-Autor: Jiří Matějka
-Verze: 2.001 (2018-04-10)
+Author: Jiri Matejka (xmatej52)
+
+V tomto modulu je implementovano rozsireni procesu stahovani - rozsiruje tento proces o kolekci odkazu z RSS zdroju.
 """
+
 import xml.etree.ElementTree as ET
 import re
 from time import time
@@ -39,20 +40,26 @@ class Link_collector( Page_downloader ):
         custom_parse = False
         custom_links = set()
         root         = None
+        # prvne zkusime mirumilovnou cestu, pokud dokument odpovida XML specifikaci
+        # tak to je cajk
         try:
             root = ET.fromstring( page )
         except:
+            # dokument neodpovida XML specifikaci, vyrveme z nich vsechno mozne
             custom_parse = True
             custom_links = Functions.get_data_from_xml( 'link', page )
 
         links_found = set()
         if ( custom_parse ):
             items = custom_links
+            # pokud parsujeme data z regexu, dame si bacha, aby to, co se naslo jako odkaz,
+            # nebylo na vice nez jeden radek.
             for link in items:
                 if ( link and ( len( link.splitlines() ) <= 1 ) and ( link not in self._dedup_links ) ):
                     self._dedup_links.add( link )
                     links_found.add( link )
         else:
+            # Jinak si vytvorime iterator a projedeme vsechny odkazy
             iterator = root.iter()
             for item in iterator:
                 if ( item.tag == 'link' ):
@@ -62,6 +69,7 @@ class Link_collector( Page_downloader ):
                         if ( link and ( link not in self._dedup_links ) ):
                             links_found.add( link )
                             self._dedup_links.add( link )
+
         return links_found
 
     def collect_links_from_url( self, url ):

@@ -1,0 +1,8 @@
+{
+     "annotate_vertical": {
+         "annotation_format": "mg4j",
+         "vert_cols": [
+            "position", "token", "tag", "lemma", "parpos", "function", "parword", "partag" ,"parlemma", "paroffset", "link", "length", "lower"
+         ]
+     }
+}
